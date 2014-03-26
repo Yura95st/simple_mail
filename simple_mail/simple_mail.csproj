@@ -53,20 +53,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Messages\SentMessagesViewModel.cs" />
+    <Compile Include="ViewModels\Messages\InboxMessagesViewModel.cs" />
+    <Compile Include="Views\ApplicationView.xaml.cs">
+      <DependentUpon>ApplicationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Messages\SentMessagesView.xaml.cs">
+      <DependentUpon>SentMessagesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Messages\InboxMessagesView.xaml.cs">
+      <DependentUpon>InboxMessagesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LeftNavigationPanel.xaml.cs">
+      <DependentUpon>LeftNavigationPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="HelperClasses\ObservableObject.cs" />
+    <Compile Include="HelperClasses\RelayCommand.cs" />
+    <Page Include="Views\ApplicationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Messages\SentMessagesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Messages\InboxMessagesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LeftNavigationPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

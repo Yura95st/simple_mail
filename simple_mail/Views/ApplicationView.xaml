@@ -1,0 +1,30 @@
+﻿<Window x:Class="simple_mail.Views.ApplicationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:simple_mail.ViewModels"
+        xmlns:v="clr-namespace:simple_mail.Views"
+        Title="BookLibrary" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:InboxMessagesViewModel}">
+            <v:InboxMessagesView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:SentMessagesViewModel}">
+            <v:SentMessagesView />
+        </DataTemplate>        
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <v:LeftNavigationPanel Grid.Column="0" />
+
+        <ContentControl Grid.Column="1" Content="{Binding CurrentPageViewModel}" />
+
+    </Grid>
+</Window>
