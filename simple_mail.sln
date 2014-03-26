@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_mail", "simple_mail\simple_mail.csproj", "{9BE416B9-AA9E-45A6-9914-18A27F8EBF37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "data_models", "data_models\data_models.csproj", "{F16F4840-844F-45DB-B56E-C9FC667E9B48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "database_lib", "database_lib\database_lib.csproj", "{C717671C-39E2-44A6-9F3F-C446F2B3E15B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{9BE416B9-AA9E-45A6-9914-18A27F8EBF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BE416B9-AA9E-45A6-9914-18A27F8EBF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BE416B9-AA9E-45A6-9914-18A27F8EBF37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F16F4840-844F-45DB-B56E-C9FC667E9B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F16F4840-844F-45DB-B56E-C9FC667E9B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F16F4840-844F-45DB-B56E-C9FC667E9B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F16F4840-844F-45DB-B56E-C9FC667E9B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C717671C-39E2-44A6-9F3F-C446F2B3E15B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C717671C-39E2-44A6-9F3F-C446F2B3E15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C717671C-39E2-44A6-9F3F-C446F2B3E15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C717671C-39E2-44A6-9F3F-C446F2B3E15B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
