@@ -22,7 +22,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <v:LeftNavigationPanel Grid.Column="0" />
+        <v:LeftNavigationPanelView Grid.Column="0" />
 
         <ContentControl Grid.Column="1" Content="{Binding CurrentPageViewModel}" />
 
