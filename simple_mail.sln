@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "data_models", "data_models\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "database_lib", "database_lib\database_lib.csproj", "{C717671C-39E2-44A6-9F3F-C446F2B3E15B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "database_lib_test", "database_lib_test\database_lib_test.csproj", "{9984C977-EF6D-49DB-AD15-268D2B2AF386}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C717671C-39E2-44A6-9F3F-C446F2B3E15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C717671C-39E2-44A6-9F3F-C446F2B3E15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C717671C-39E2-44A6-9F3F-C446F2B3E15B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9984C977-EF6D-49DB-AD15-268D2B2AF386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9984C977-EF6D-49DB-AD15-268D2B2AF386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9984C977-EF6D-49DB-AD15-268D2B2AF386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9984C977-EF6D-49DB-AD15-268D2B2AF386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
