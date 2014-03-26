@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="simple_mail.Views.LeftNavigationPanelView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="10 5 5 5" Width="120" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Padding="0,10" Margin="5,5,5,20" Content="Compose"></Button>
+
+        <StackPanel Grid.Row="1">
+            <Button Margin="5" Content="Inbox"
+                    Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    CommandParameter="{Binding PageViewModels[0]}"></Button>
+
+            <Button Margin="5" Content="Sent"
+                    Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    CommandParameter="{Binding PageViewModels[1]}"></Button>        
+        </StackPanel>
+    </Grid>
+</UserControl>
