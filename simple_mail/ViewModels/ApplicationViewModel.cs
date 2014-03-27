@@ -19,6 +19,8 @@ namespace simple_mail.ViewModels
         public ApplicationViewModel()
         {
             // Add available pages
+            PageViewModels.Add(new AuthorizationViewModel());
+            PageViewModels.Add(new RegistrationViewModel());
             PageViewModels.Add(new InboxMessagesViewModel());
             PageViewModels.Add(new SentMessagesViewModel());
 
