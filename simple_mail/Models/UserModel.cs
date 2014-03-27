@@ -1,15 +1,27 @@
 ﻿using simple_mail.HelperClasses;
 using data_models.Models;
+using data_models.Validations;
 
 namespace simple_mail.Models
 {
     public class UserModel : ObservableObject
     {
-        private User _user;
+        private User _user = new User();
+
+        public UserModel()
+        { }
 
         public UserModel(User user)
         {
             _user = user;
+        }
+
+        public User User
+        {
+            get
+            {
+                return _user;
+            }
         }
 
         public int Id
