@@ -12,19 +12,21 @@
 
         <DataTemplate DataType="{x:Type vm:SentMessagesViewModel}">
             <v:SentMessagesView />
-        </DataTemplate>        
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:RegistrationViewModel}">
+            <v:RegistrationView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:AuthorizationViewModel}">
+            <v:AuthorizationView />
+        </DataTemplate>
 
     </Window.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <v:LeftNavigationPanelView Grid.Column="0" />
-
-        <ContentControl Grid.Column="1" Content="{Binding CurrentPageViewModel}" />
-
+    <Grid>        
+        
+        <ContentControl Content="{Binding CurrentPageViewModel}" />
+        
     </Grid>
 </Window>

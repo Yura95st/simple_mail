@@ -13,11 +13,11 @@
         <StackPanel Grid.Row="1">
             <Button Margin="5" Content="Inbox"
                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                    CommandParameter="{Binding PageViewModels[0]}"></Button>
+                    CommandParameter="{Binding DataContext.PageViewModels[0], RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></Button>
 
             <Button Margin="5" Content="Sent"
                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                    CommandParameter="{Binding PageViewModels[1]}"></Button>        
+                    CommandParameter="{Binding DataContext.PageViewModels[1], RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></Button>        
         </StackPanel>
     </Grid>
 </UserControl>
