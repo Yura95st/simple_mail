@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System.Configuration;
+using System.Data.SqlClient;
 
 namespace database_lib.DbHelpers
 {
@@ -6,9 +7,16 @@ namespace database_lib.DbHelpers
     {
         protected SqlConnection connection;
 
-        public void SetConnectionString(string connectionString)
+        public BaseDbHelper()
         {
             connection = new SqlConnection();
+
+            this.SetConnectionString(ConfigurationManager.
+                ConnectionStrings["DBSqlConnectionStrings"].ConnectionString);
+        }
+
+        public void SetConnectionString(string connectionString)
+        {
             this.connection.ConnectionString = connectionString;
         }
 
