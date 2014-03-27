@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:simple_mail.ViewModels"
         xmlns:v="clr-namespace:simple_mail.Views"
-        Title="BookLibrary" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+        Title="Simple Mail" Height="350" Width="525" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:InboxMessagesViewModel}">
