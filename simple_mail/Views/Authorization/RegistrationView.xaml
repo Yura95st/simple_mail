@@ -16,25 +16,29 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="Username:" Margin="0,0,5,0" />
-        <TextBox Grid.Row="1" Padding="0 3" Margin="0" Text="{Binding Path=Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Row="2" Content="Email:" Margin="0,0,5,0" />
-        <TextBox Grid.Row="3" Padding="0 3" Margin="0" Text="{Binding Path=Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Row="4" Content="Password:" Margin="0,0,5,0" />
+        <Label Grid.Row="0" Content="Username:" Margin="-5,0,0,0" />
+        <TextBox Grid.Row="1" Padding="0 3" Margin="0" Text="{Binding Path=UserAccount.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="2" Content="Email:" Margin="-5,0,0,0" />
+        <TextBox Grid.Row="3" Padding="0 3" Margin="0" Text="{Binding Path=UserAccount.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="4" Content="Password:" Margin="-5,0,0,0" />
         <PasswordBox Grid.Row="5" Padding="0 3" Margin="0" pba:PasswordBoxAssistant.BindPassword="true"
-                     pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        <Label Grid.Row="6" Content="Confirm your password:" Margin="0,0,5,0" />
+                     pba:PasswordBoxAssistant.BoundPassword="{Binding Path=UserAccount.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="6" Content="Confirm your password:" Margin="-5,0,0,0" />
         <PasswordBox Grid.Row="7" Padding="0 3" Margin="0" pba:PasswordBoxAssistant.BindPassword="true"
                      pba:PasswordBoxAssistant.BoundPassword="{Binding Path=ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <StackPanel Grid.Row="8" Orientation="Horizontal">
-            <Button Margin="5" Padding="10,5" Content="Create an account" />
-            <Button Margin="5" Padding="10,5" Content="Sign in"
+        <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="0,5,0,0">
+            <Button Margin="0,5,5,0" Padding="10,5" Content="Create an account"
+                    Command="{Binding SignUpCommand }"/>
+            <Button Margin="5,5,0,0" Padding="10,5" Content="Sign in"
                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                     CommandParameter="{Binding DataContext.PageViewModels[0], RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></Button>
         </StackPanel>
+
+        <Label Grid.Row="9" Content="{Binding Path=SignUpInfoMsg, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="-5,5,0,0" />
 
     </Grid>
 </UserControl>
