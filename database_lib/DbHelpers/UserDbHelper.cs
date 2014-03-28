@@ -1,4 +1,6 @@
-﻿using data_models.Models;
+﻿using data_models.Exceptions;
+using data_models.Models;
+using data_models.Validations;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,7 +33,7 @@ namespace database_lib.DbHelpers
         {
             if (userId <= 0)
             {
-                //TODO: throw InvalidArgument exception
+                throw new ArgumentOutOfRangeException("userId");
             }
 
             List<int> usersIdList = new List<int>();
@@ -43,7 +45,7 @@ namespace database_lib.DbHelpers
             {
                 user = GetUsersById(usersIdList)[0];
             }
-            catch(Exception e)
+            catch
             {
                 return null;
             }
@@ -71,9 +73,12 @@ namespace database_lib.DbHelpers
         // gets user by email
         public User GetUserByEmail(string email)
         {
-            User user = null;
+            if (!MyValidation.IsValidEmail(email))
+            {
+                throw new InvalidEmailException("email");
+            }
 
-            //TODO: email validation
+            User user = null;
 
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = selectUsersCommand +
@@ -90,7 +95,7 @@ namespace database_lib.DbHelpers
             {
                 user = ExecuteSelectUsersCommand(cmd)[0];
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
@@ -105,19 +110,21 @@ namespace database_lib.DbHelpers
         }
 
         // adds new user to the library
+        // returns id of the newly created user or 0 - if it wasn't created
         public int AddNewUser(User user)
         {
-            if (!CheckValidUserFields(user))
+            try
             {
-                //TODO: throw UserInvalidFields exeption;
-                return -1;
+                MyValidation.CheckValidUserFields(user);
             }
-
-            int userId = -1;
+            catch
+            {
+                throw;
+            }
 
             if (this.GetUserByEmail(user.Email) != null)
             {
-                //TODO: throw UserAlreadyExists exeption;
+                throw new UserAlreadyExistsException(user.Email);
             }
 
             SqlCommand cmd = new SqlCommand();
@@ -143,7 +150,7 @@ namespace database_lib.DbHelpers
             cmd.Parameters.Add(new SqlParameter
             {
                 ParameterName = "@password",
-                Value = user.Password,
+                Value = MyValidation.Hash(user.Password, user.Email),
                 SqlDbType = SqlDbType.VarChar
             });
 
@@ -154,7 +161,16 @@ namespace database_lib.DbHelpers
                 SqlDbType = SqlDbType.Int
             });
 
-            userId = Convert.ToInt32(ExecuteScalarCommand(cmd).ToString());
+            int userId;
+
+            try
+            {
+                userId = Convert.ToInt32(ExecuteScalarCommand(cmd).ToString());
+            }
+            catch
+            {
+                return 0;
+            }
 
             return userId;
         }
@@ -171,18 +187,82 @@ namespace database_lib.DbHelpers
             throw new NotImplementedException();
         }
 
+        public int LogInUser(User user)
+        {
+            User existingUser = null;
+
+            try
+            {
+                existingUser = this.GetUserByEmail(user.Email);
+            }
+            catch
+            {
+                throw;
+            }
+
+            if (existingUser == null) 
+            {
+                throw new UserDoesNotExistException();
+            }
+
+            if (!MyValidation.AreTwoPasswordsEqual(existingUser.Password, MyValidation.Hash(user.Password, existingUser.Email)))
+            {
+                throw new InvalidPasswordException(user.Password);
+            }
+
+            try
+            {
+                SetUserOnline(existingUser.Id);
+            }
+            catch
+            {
+                throw;
+            }
+
+            return existingUser.Id;
+        }
+
+        public void LogOutUser(int userId)
+        {
+            try
+            {
+                SetUserOffline(userId);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         // returns user object from the query result - dataReader
         public static User GetUserFromQueryResult(DbDataReader dataReader)
         {
             User user = new User();
 
-            user.Id = Convert.ToInt32(dataReader["user_id"]);
-            user.FirstName = (string) dataReader["first_name"];
-            user.Email = (string) dataReader["email"];
-            user.Password = (string) dataReader["password"];
-            user.State = Convert.ToInt32(dataReader["state"]);
+            try
+            {
+                user.Id = Convert.ToInt32(dataReader["user_id"]);
+                user.FirstName = (string)dataReader["first_name"];
+                user.Email = (string)dataReader["email"];
+                user.Password = (string)dataReader["password"];
+                user.State = Convert.ToInt32(dataReader["state"]);
+            }
+            catch
+            {
+                return null;
+            }
 
             return user;
+        }
+
+        public void SetUserOnline(int userId)
+        {
+            SetUserState(userId, 1);
+        }
+
+        public void SetUserOffline(int userId)
+        {
+            SetUserState(userId, 0);
         }
 
         // executes sql command to get users
@@ -215,18 +295,39 @@ namespace database_lib.DbHelpers
             return users;
         }
 
-        private bool CheckValidUserFields(User user)
+        // changes user state: 0 - offline, 1 - online
+        private void SetUserState(int userId, int state)
         {
-            //TODO: create UserValidation class
-            if (user == null) {
-                return false;
+            if (userId <= 0)
+            {
+                throw new ArgumentOutOfRangeException("userId");
             }
 
-            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.FirstName)) {
-                return false;
+            if (state < 0)
+            {
+                throw new ArgumentOutOfRangeException("state");
             }
 
-            return true;
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = @"
+                    UPDATE users SET state = @state
+                    WHERE user_id = @user_id";
+
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@user_id",
+                Value = userId,
+                SqlDbType = SqlDbType.Int
+            });
+
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@state",
+                Value = state,
+                SqlDbType = SqlDbType.Int
+            });
+
+            ExecuteNonQueryCommand(cmd);
         }
     }
 }
