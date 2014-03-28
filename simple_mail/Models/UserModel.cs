@@ -1,6 +1,7 @@
 ﻿using simple_mail.HelperClasses;
 using data_models.Models;
 using data_models.Validations;
+using System;
 
 namespace simple_mail.Models
 {
@@ -33,7 +34,6 @@ namespace simple_mail.Models
             {
                 if (value != _user.Id)
                 {
-                    //TODO: add userId validation
                     _user.Id = value;
                     OnPropertyChanged("Id");
                 }
@@ -50,7 +50,6 @@ namespace simple_mail.Models
             {
                 if (value != _user.FirstName)
                 {
-                    //TODO: add FirstName validation
                     _user.FirstName = value;
                     OnPropertyChanged("FirstName");
                 }
@@ -67,8 +66,7 @@ namespace simple_mail.Models
             {
                 if (value != _user.Email)
                 {
-                    //TODO: add Email validation
-                    _user.Email = value;
+                    _user.Email = value.ToLower();
                     OnPropertyChanged("Email");
                 }
             }
@@ -84,7 +82,6 @@ namespace simple_mail.Models
             {
                 if (value != _user.Password)
                 {
-                    //TODO: add Password validation
                     _user.Password = value;
                     OnPropertyChanged("Password");
                 }
@@ -101,7 +98,6 @@ namespace simple_mail.Models
             {
                 if (value != _user.State)
                 {
-                    //TODO: add State validation
                     _user.State = value;
                     OnPropertyChanged("State");
                 }

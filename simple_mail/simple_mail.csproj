@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HelperClasses\Messenger.cs" />
     <Compile Include="HelperClasses\PasswordBoxAssistant.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Authorization\RegistrationViewModel.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\Messages\SentMessagesViewModel.cs" />
     <Compile Include="ViewModels\Messages\InboxMessagesViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelCommunication.cs" />
     <Compile Include="Views\ApplicationView.xaml.cs">
       <DependentUpon>ApplicationView.xaml</DependentUpon>
     </Compile>
