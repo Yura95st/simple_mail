@@ -1,4 +1,6 @@
-﻿using System;
+﻿using data_models.Exceptions;
+using data_models.Models;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -37,9 +39,37 @@ namespace data_models.Validations
             return BitConverter.ToString(new SHA256Managed().ComputeHash(saltedValue));
         }
 
-        public static bool IsValidFirstName(string p)
+        public static bool IsValidFirstName(string firstName)
         {
             return true;
+        }
+
+        public static void CheckValidUserFields(User user)
+        {
+            if (!IsValidEmail(user.Email)) 
+            {
+                throw new InvalidEmailException(user.Email);
+            }
+
+            if (!IsValidFirstName(user.FirstName))
+            {
+                throw new InvalidFirstNameException(user.FirstName);
+            }
+
+            if (!IsValidPassword(user.Password))
+            {
+                throw new InvalidPasswordException(user.FirstName);
+            }
+        }
+
+        public static bool IsValidPassword(string password)
+        {
+            return true;
+        }
+
+        public static bool AreTwoPasswordsEqual(string pass1, string pass2)
+        {
+            return String.Equals(pass1, pass2);
         }
     }
 }
