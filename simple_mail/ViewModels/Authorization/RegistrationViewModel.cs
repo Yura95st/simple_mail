@@ -1,4 +1,5 @@
-﻿using data_models.Models;
+﻿using data_models.Exceptions;
+using data_models.Models;
 using data_models.Validations;
 using database_lib.DbHelpers;
 using simple_mail.HelperClasses;
@@ -17,9 +18,9 @@ namespace simple_mail.ViewModels
 
         public RegistrationViewModel()
         {
-            UserAccount.Email = "yura95st@gmail.com";
-            UserAccount.FirstName = "Yura";
-            UserAccount.Password = "1111";
+            UserAccount.FirstName = "Admin";
+            UserAccount.Email = "admin@gmail.com";
+            UserAccount.Password = "admin";
         }
 
         public UserModel UserAccount
@@ -89,46 +90,59 @@ namespace simple_mail.ViewModels
         {
             SignUpInfoMsg = "";
 
-            if (!MyValidation.IsValidEmail(UserAccount.Email))
-            {
-                SignUpInfoMsg = "INFO: Email is invalid!";
-                return;
-            }
+            UserDbHelper userDbHelper = new UserDbHelper();
 
-            if (!MyValidation.IsValidFirstName(UserAccount.FirstName))
-            {
-                SignUpInfoMsg = "INFO: UserName is invalid!";
-                return;
-            }
-
-            if (!ArePasswordEqual())
+            if (!MyValidation.AreTwoPasswordsEqual(UserAccount.Password, ConfirmPassword))
             {
                 SignUpInfoMsg = "INFO: Passwords are not equal!";
                 return;
             }
 
-            UserDbHelper userDbHelper = new UserDbHelper();
+            try
+            {
+                userDbHelper.AddNewUser(UserAccount.User);
+            }
+            catch (InvalidEmailException e)
+            {
+                SignUpInfoMsg = "INFO: Email is invalid!";
+                return;
+            }
+            catch (InvalidFirstNameException e)
+            {
+                SignUpInfoMsg = "INFO: Username is invalid!";
+                return;
+            }
+            catch (InvalidPasswordException e)
+            {
+                SignUpInfoMsg = "INFO: Password is invalid!";
+                return;
+            }
+            catch (UserAlreadyExistsException e)
+            {
+                SignUpInfoMsg = "INFO: UserAccount with such email already exists!";
+                return;
+            }
+
+            int userId = 0;
 
             try
             {
-                int newUserId = userDbHelper.AddNewUser(UserAccount.User);
-                //TODO: Set user online
+                userId = userDbHelper.LogInUser(UserAccount.User);
             }
             catch (Exception e)
             {
-                SignUpInfoMsg = "INFO: UserAccount with such email already exists!";
+                SignUpInfoMsg = "INFO: An error occured while logging You in!";
+                return;
             }
+
+            AuthorizationViewModel.LoggedUserId = userId;
+            ViewModelCommunication.Messaging.NotifyColleagues(ViewModelCommunication.UserLoggedIn);
         }
 
         private bool AreValidUserFields()
         {
             return !(string.IsNullOrEmpty(UserAccount.FirstName) || string.IsNullOrEmpty(UserAccount.Email) || string.IsNullOrEmpty(UserAccount.Password) 
                 || string.IsNullOrEmpty(this.ConfirmPassword));
-        }
-
-        private bool ArePasswordEqual()
-        {
-            return (string.Equals(UserAccount.Password, ConfirmPassword));
         }
     }
 }

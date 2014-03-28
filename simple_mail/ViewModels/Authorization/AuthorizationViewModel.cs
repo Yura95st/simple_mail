@@ -5,6 +5,7 @@ using simple_mail.HelperClasses;
 using simple_mail.Models;
 using System.Windows.Input;
 using System;
+using data_models.Exceptions;
 
 namespace simple_mail.ViewModels
 {
@@ -12,10 +13,16 @@ namespace simple_mail.ViewModels
     {
         private UserModel _userModel = new UserModel();
         private ICommand _signInCommand;
+        private ICommand _logOutCommand;
         private string _signInInfoMsg = "";
 
+        public static int LoggedUserId = 0;
+
         public AuthorizationViewModel()
-        { }
+        {
+            UserAccount.Email = "admin@gmail.com";
+            UserAccount.Password = "admin";
+        }
 
         public UserModel UserAccount
         {
@@ -64,36 +71,78 @@ namespace simple_mail.ViewModels
             }
         }
 
+        public ICommand LogOutCommand
+        {
+            get
+            {
+                if (_logOutCommand == null)
+                {
+                    _logOutCommand = new RelayCommand(
+                        param => LogOutUser(),
+                        param => IsUserLoggedIn()
+                    );
+                }
+                return _logOutCommand;
+            }
+        }
+
         private void AuthorizeUser()
         {
             SignInInfoMsg = "";
 
-            if (!MyValidation.IsValidEmail(UserAccount.Email))
+            UserDbHelper userDbHelper = new UserDbHelper();
+
+            int userId = 0;
+
+            try
+            {
+                userId = userDbHelper.LogInUser(UserAccount.User);
+            }
+            catch (InvalidEmailException e)
             {
                 SignInInfoMsg = "INFO: Email is invalid!";
                 return;
             }
-
-            UserDbHelper userDbHelper = new UserDbHelper();
-            User userInDb = null;
-            
-            try 
-            {                
-                userInDb = userDbHelper.GetUserByEmail(UserAccount.Email);
+            catch (UserDoesNotExistException e)
+            {
+                SignInInfoMsg = "INFO: Couldn't log you in as " + UserAccount.Email;
+                return;
             }
-            catch(Exception e)
-            {}
-
-            if (!String.Equals(userInDb.Password, MyValidation.Hash(UserAccount.Password, userInDb.Email)))
+            catch (InvalidPasswordException e)
             {
                 SignInInfoMsg = "INFO: Password is invalid!";
                 return;
             }
+
+            AuthorizationViewModel.LoggedUserId = userId;
+            ViewModelCommunication.Messaging.NotifyColleagues(ViewModelCommunication.UserLoggedIn);
+        }
+
+        private void LogOutUser()
+        {
+            UserDbHelper userDbHelper = new UserDbHelper();
+
+            try
+            {
+                userDbHelper.LogOutUser(AuthorizationViewModel.LoggedUserId);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                return;
+            }
+
+            AuthorizationViewModel.LoggedUserId = 0;
+            ViewModelCommunication.Messaging.NotifyColleagues(ViewModelCommunication.UserLoggedOut);
         }
 
         private bool AreValidUserFields()
         {
             return !(string.IsNullOrEmpty(UserAccount.Email) || string.IsNullOrEmpty(UserAccount.Password));
+        }
+
+        private bool IsUserLoggedIn()
+        {
+            return AuthorizationViewModel.LoggedUserId > 0;
         }
     }
 }
