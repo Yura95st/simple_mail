@@ -3,7 +3,6 @@ using data_models.Models;
 using data_models.Validations;
 using database_lib.DbHelpers;
 using simple_mail.HelperClasses;
-using simple_mail.Models;
 using System;
 using System.Windows.Input;
 
@@ -11,19 +10,19 @@ namespace simple_mail.ViewModels
 {
     public class RegistrationViewModel : BaseViewModel
     {
-        private UserModel _userModel = new UserModel();
+        private User _userModel = new User();
         private ICommand _signUpCommand;
         private string _confirmPassword = "";
         private string _signUpInfoMsg = "";
 
         public RegistrationViewModel()
         {
-            UserAccount.FirstName = "Admin";
-            UserAccount.Email = "admin@gmail.com";
-            UserAccount.Password = "admin";
+            UserModel.FirstName = "Admin";
+            UserModel.Email = "admin@gmail.com";
+            UserModel.Password = "admin";
         }
 
-        public UserModel UserAccount
+        public User UserModel
         {
             get
             {
@@ -92,7 +91,7 @@ namespace simple_mail.ViewModels
 
             UserDbHelper userDbHelper = new UserDbHelper();
 
-            if (!MyValidation.AreTwoPasswordsEqual(UserAccount.Password, ConfirmPassword))
+            if (!MyValidation.AreTwoPasswordsEqual(UserModel.Password, ConfirmPassword))
             {
                 SignUpInfoMsg = "INFO: Passwords are not equal!";
                 return;
@@ -100,7 +99,7 @@ namespace simple_mail.ViewModels
 
             try
             {
-                userDbHelper.AddNewUser(UserAccount.User);
+                userDbHelper.AddNewUser(UserModel);
             }
             catch (InvalidEmailException e)
             {
@@ -127,7 +126,7 @@ namespace simple_mail.ViewModels
 
             try
             {
-                userId = userDbHelper.LogInUser(UserAccount.User);
+                userId = userDbHelper.LogInUser(UserModel);
             }
             catch (Exception e)
             {
@@ -141,7 +140,7 @@ namespace simple_mail.ViewModels
 
         private bool AreValidUserFields()
         {
-            return !(string.IsNullOrEmpty(UserAccount.FirstName) || string.IsNullOrEmpty(UserAccount.Email) || string.IsNullOrEmpty(UserAccount.Password) 
+            return !(string.IsNullOrEmpty(UserModel.FirstName) || string.IsNullOrEmpty(UserModel.Email) || string.IsNullOrEmpty(UserModel.Password) 
                 || string.IsNullOrEmpty(this.ConfirmPassword));
         }
     }

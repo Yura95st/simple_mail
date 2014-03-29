@@ -1,4 +1,4 @@
-﻿using simple_mail.HelperClasses;
+﻿using data_models.HelperClasses;
 
 namespace simple_mail.ViewModels
 {

@@ -43,6 +43,7 @@
     <Compile Include="Exceptions\InvalidEmailException.cs" />
     <Compile Include="Exceptions\UserAlreadyExistsException.cs" />
     <Compile Include="Exceptions\UserDoesNotExistException.cs" />
+    <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

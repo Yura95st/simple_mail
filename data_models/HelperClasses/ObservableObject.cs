@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.ComponentModel;
 
-namespace simple_mail.HelperClasses
+namespace data_models.HelperClasses
 {
     public abstract class ObservableObject : INotifyPropertyChanged
     {

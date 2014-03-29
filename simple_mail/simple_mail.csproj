@@ -84,7 +84,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="HelperClasses\RelayCommand.cs" />
     <Page Include="Views\ApplicationView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -112,7 +111,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -20,12 +20,12 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Content="Username:" Margin="-5,0,0,0" />
-        <TextBox Grid.Row="1" Padding="0 3" Margin="0" Text="{Binding Path=UserAccount.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="1" Padding="0 3" Margin="0" Text="{Binding Path=UserModel.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Row="2" Content="Email:" Margin="-5,0,0,0" />
-        <TextBox Grid.Row="3" Padding="0 3" Margin="0" Text="{Binding Path=UserAccount.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="3" Padding="0 3" Margin="0" Text="{Binding Path=UserModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Row="4" Content="Password:" Margin="-5,0,0,0" />
         <PasswordBox Grid.Row="5" Padding="0 3" Margin="0" pba:PasswordBoxAssistant.BindPassword="true"
-                     pba:PasswordBoxAssistant.BoundPassword="{Binding Path=UserAccount.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                     pba:PasswordBoxAssistant.BoundPassword="{Binding Path=UserModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Label Grid.Row="6" Content="Confirm your password:" Margin="-5,0,0,0" />
         <PasswordBox Grid.Row="7" Padding="0 3" Margin="0" pba:PasswordBoxAssistant.BindPassword="true"
                      pba:PasswordBoxAssistant.BoundPassword="{Binding Path=ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

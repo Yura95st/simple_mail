@@ -1,35 +1,96 @@
-﻿
+﻿using data_models.HelperClasses;
+
 namespace data_models.Models
 {
-    public class User
+    public class User : ObservableObject
     {
+        private int _id;
+        private string _fistName;
+        private string _email;
+        private string _password;
+        private int _state;
+
+        public User()
+        { }
+
         public int Id
         {
-            get;
-            set;
+            get {
+                return _id; 
+            }
+            set
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    OnPropertyChanged("Id");
+                }
+            }
         }
 
         public string FirstName
         {
-            get;
-            set;
+            get
+            {
+                return _fistName;
+            }
+            set
+            {
+                if (value != _fistName)
+                {
+                    _fistName = value;
+                    OnPropertyChanged("FirstName");
+                }
+            }
         }
 
         public string Email
         {
-            get;
-            set;
+            get
+            {
+                return _email;
+            }
+            set
+            {
+                if (value != _email)
+                {
+                    _email = value.ToLower();
+                    OnPropertyChanged("Email");
+                }
+            }
         }
 
         public string Password
         {
-            get;
-            set;
+            get
+            {
+                return _password;
+            }
+            set
+            {
+                if (value != _password)
+                {
+                    _password = value;
+                    OnPropertyChanged("Password");
+                }
+            }
         }
+
         public int State
         {
-            get;
-            set;
+            get
+            {
+                return _state;
+            }
+            set
+            {
+                if (value != _state)
+                {
+                    _state = value;
+                    OnPropertyChanged("State");
+                }
+            }
         }
     }
 }
+
