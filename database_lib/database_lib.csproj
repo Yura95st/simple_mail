@@ -41,8 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbHelpers\BaseDbHelper.cs" />
+    <Compile Include="DbHelpers\MessageDbHelper.cs" />
     <Compile Include="DbHelpers\UserDbHelper.cs" />
+    <Compile Include="DbValues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\DbValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\data_models\data_models.csproj">

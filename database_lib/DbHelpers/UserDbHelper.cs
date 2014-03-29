@@ -1,6 +1,7 @@
 ﻿using data_models.Exceptions;
 using data_models.Models;
 using data_models.Validations;
+using database_lib.Validation;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,9 +12,16 @@ namespace database_lib.DbHelpers
 {
     public class UserDbHelper : BaseDbHelper
     {
+        //SELECT u.user_id, u.first_name, u.email, u.password, u.state
+        //FROM users u
         private string selectUsersCommand = @"
-            SELECT u.user_id, u.first_name, u.email, u.password, u.state
-            FROM users u ";
+            SELECT "
+            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_ID + " AS " + DbValues.USERS_CAPTION_COLUMN_ID + ", "
+            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_FIRST_NAME + " AS " + DbValues.USERS_CAPTION_COLUMN_FIRST_NAME + ", "
+            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_EMAIL + " AS " + DbValues.USERS_CAPTION_COLUMN_EMAIL + ", "
+            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_PASSWORD + " AS " + DbValues.USERS_CAPTION_COLUMN_PASSWORD + ", "
+            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_STATE + " AS " + DbValues.USERS_CAPTION_COLUMN_STATE
+            + " FROM " + DbValues.TABLE_USERS + " " + DbValues.TABLE_CAPTION_USERS;
 
         public UserDbHelper()
         {
@@ -64,8 +72,10 @@ namespace database_lib.DbHelpers
             string idString = String.Join(", ", usersIdList.FindAll(id => id > 0));
 
             SqlCommand cmd = new SqlCommand();
+
+            //WHERE u.user_id IN (" + idString + ");
             cmd.CommandText = selectUsersCommand +
-                @" WHERE u.user_id IN (" + idString + ")";
+                @" WHERE " + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_ID + " IN (" + idString + ")";
 
             return ExecuteSelectUsersCommand(cmd);
         }
@@ -81,8 +91,10 @@ namespace database_lib.DbHelpers
             User user = null;
 
             SqlCommand cmd = new SqlCommand();
+
+            //WHERE u.email = @email;
             cmd.CommandText = selectUsersCommand +
-                @" WHERE u.email = @email";
+                @" WHERE " + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_EMAIL + " = @email";
 
             cmd.Parameters.Add(new SqlParameter
             {
@@ -128,10 +140,14 @@ namespace database_lib.DbHelpers
             }
 
             SqlCommand cmd = new SqlCommand();
+
+            // INSERT INTO users(first_name, email, password, state) 
+            // VALUES(@first_name, @email, @password, @state);
             cmd.CommandText = @"
-                    INSERT INTO users(first_name, email, password, state) 
-                    VALUES(@first_name, @email, @password, @state);
-                    SELECT SCOPE_IDENTITY();";
+                INSERT INTO " + DbValues.TABLE_USERS + "(" 
+                + DbValues.USERS_COLUMN_FIRST_NAME + ", " + DbValues.USERS_COLUMN_EMAIL + ", " 
+                + DbValues.USERS_COLUMN_PASSWORD + ", " + DbValues.USERS_COLUMN_STATE 
+                + ") VALUES(@first_name, @email, @password, @state); SELECT SCOPE_IDENTITY();";
 
             cmd.Parameters.Add(new SqlParameter
             {
@@ -241,11 +257,30 @@ namespace database_lib.DbHelpers
 
             try
             {
-                user.Id = Convert.ToInt32(dataReader["user_id"]);
-                user.FirstName = (string)dataReader["first_name"];
-                user.Email = (string)dataReader["email"];
-                user.Password = (string)dataReader["password"];
-                user.State = Convert.ToInt32(dataReader["state"]);
+                if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_ID))
+                {
+                    user.Id = Convert.ToInt32(dataReader[DbValues.USERS_CAPTION_COLUMN_ID]);
+                }
+
+                if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_FIRST_NAME))
+                {
+                    user.FirstName = (string)dataReader[DbValues.USERS_CAPTION_COLUMN_FIRST_NAME];
+                }
+
+                if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_EMAIL))
+                {
+                    user.Email = (string)dataReader[DbValues.USERS_CAPTION_COLUMN_EMAIL];
+                }
+
+                if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_PASSWORD))
+                {
+                    user.Password = (string)dataReader[DbValues.USERS_CAPTION_COLUMN_PASSWORD];
+                }
+
+                if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_STATE))
+                {
+                    user.State = Convert.ToInt32(dataReader[DbValues.USERS_CAPTION_COLUMN_STATE]);
+                }
             }
             catch
             {
@@ -309,9 +344,12 @@ namespace database_lib.DbHelpers
             }
 
             SqlCommand cmd = new SqlCommand();
+
+            // UPDATE users SET state = @state
+            // WHERE user_id = @user_id";
             cmd.CommandText = @"
-                    UPDATE users SET state = @state
-                    WHERE user_id = @user_id";
+                UPDATE " + DbValues.TABLE_USERS 
+                + " SET " + DbValues.USERS_COLUMN_STATE + " = @state WHERE " + DbValues.USERS_COLUMN_ID + " = @user_id";
 
             cmd.Parameters.Add(new SqlParameter
             {
