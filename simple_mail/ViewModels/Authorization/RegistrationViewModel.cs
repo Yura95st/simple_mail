@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace simple_mail.ViewModels
 {
-    public class RegistrationViewModel : BaseViewModel
+    public class RegistrationViewModel : BaseViewModel, IPageViewModel
     {
         private User _userModel = new User();
         private ICommand _signUpCommand;
@@ -17,9 +17,9 @@ namespace simple_mail.ViewModels
 
         public RegistrationViewModel()
         {
-            UserModel.FirstName = "Admin";
-            UserModel.Email = "admin@gmail.com";
-            UserModel.Password = "admin";
+            //UserModel.FirstName = "Admin";
+            //UserModel.Email = "admin@gmail.com";
+            //UserModel.Password = "admin";
         }
 
         public User UserModel
@@ -83,6 +83,13 @@ namespace simple_mail.ViewModels
                 }
                 return _signUpCommand;
             }
+        }
+
+        public void OnShow()
+        {
+            UserModel.FirstName = "";
+            UserModel.Email = "";
+            UserModel.Password = "";
         }
 
         private void CreateNewUserAccount()

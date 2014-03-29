@@ -11,8 +11,8 @@ namespace simple_mail.ViewModels
         #region Fields
 
         private ICommand _changePageCommand;
-        private BaseViewModel _currentPageViewModel;
-        private List<BaseViewModel> _pageViewModels;
+        private IPageViewModel _currentPageViewModel;
+        private List<IPageViewModel> _pageViewModels;
 
         #endregion
 
@@ -34,30 +34,30 @@ namespace simple_mail.ViewModels
             PageViewModels.Add(this.SentMessagesViewModel);
 
             // Set starting page
-            CurrentPageViewModel = AuthorizationViewModel;
+            this.ChangeViewModel(AuthorizationViewModel);
         }
 
         #region Properties / Commands
 
-        public BaseViewModel AuthorizationViewModel
+        public IPageViewModel AuthorizationViewModel
         {
             get;
             set;
         }
 
-        public BaseViewModel RegistrationViewModel
+        public IPageViewModel RegistrationViewModel
         {
             get;
             set;
         }
 
-        public BaseViewModel InboxMessagesViewModel
+        public IPageViewModel InboxMessagesViewModel
         {
             get;
             set;
         }
 
-        public BaseViewModel SentMessagesViewModel
+        public IPageViewModel SentMessagesViewModel
         {
             get;
             set;
@@ -70,26 +70,26 @@ namespace simple_mail.ViewModels
                 if (_changePageCommand == null)
                 {
                     _changePageCommand = new RelayCommand(
-                        p => ChangeViewModel((BaseViewModel)p),
-                        p => (p is BaseViewModel) && p != CurrentPageViewModel);
+                        p => ChangeViewModel((IPageViewModel)p),
+                        p => (p is IPageViewModel) && p != CurrentPageViewModel);
                 }
 
                 return _changePageCommand;
             }
         }
 
-        public List<BaseViewModel> PageViewModels
+        public List<IPageViewModel> PageViewModels
         {
             get
             {
                 if (_pageViewModels == null)
-                    _pageViewModels = new List<BaseViewModel>();
+                    _pageViewModels = new List<IPageViewModel>();
 
                 return _pageViewModels;
             }
         }
 
-        public BaseViewModel CurrentPageViewModel
+        public IPageViewModel CurrentPageViewModel
         {
             get
             {
@@ -109,19 +109,22 @@ namespace simple_mail.ViewModels
 
         #region Methods
 
-        private void ChangeViewModel(BaseViewModel viewModel)
+        private void ChangeViewModel(IPageViewModel viewModel)
         {
             if (!PageViewModels.Contains(viewModel))
                 PageViewModels.Add(viewModel);
 
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
+
+            viewModel.OnShow();
         }
 
         private void RegisterToLogInUserMessage()
         {
-            ViewModelCommunication.Messaging.Register(ViewModelCommunication.UserLoggedIn, (Action)delegate() {
-                    CurrentPageViewModel = InboxMessagesViewModel;
+            ViewModelCommunication.Messaging.Register(ViewModelCommunication.UserLoggedIn, (Action)delegate()
+            {
+                this.ChangeViewModel(InboxMessagesViewModel);
             });
         }
 
@@ -129,7 +132,7 @@ namespace simple_mail.ViewModels
         {
             ViewModelCommunication.Messaging.Register(ViewModelCommunication.UserLoggedOut, (Action)delegate()
             {
-                CurrentPageViewModel = AuthorizationViewModel;
+                this.ChangeViewModel(AuthorizationViewModel);
             });
         }
 

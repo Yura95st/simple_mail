@@ -7,7 +7,7 @@ using data_models.Exceptions;
 
 namespace simple_mail.ViewModels
 {
-    public class AuthorizationViewModel : BaseViewModel
+    public class AuthorizationViewModel : BaseViewModel, IPageViewModel
     {
         private User _userModel = new User();
         private ICommand _signInCommand;
@@ -19,7 +19,7 @@ namespace simple_mail.ViewModels
         public AuthorizationViewModel()
         {
             UserModel.Email = "admin@gmail.com";
-            UserModel.Password = "admin";
+            //UserModel.Password = "admin";
         }
 
         public User UserModel
@@ -82,6 +82,12 @@ namespace simple_mail.ViewModels
                 }
                 return _logOutCommand;
             }
+        }
+
+        public void OnShow()
+        {
+            //UserModel.Email = "";
+            UserModel.Password = "";
         }
 
         private void AuthorizeUser()

@@ -56,6 +56,7 @@
     <Compile Include="HelperClasses\Messenger.cs" />
     <Compile Include="HelperClasses\PasswordBoxAssistant.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\IPageViewModel.cs" />
     <Compile Include="ViewModels\Authorization\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\Authorization\AuthorizationViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
