@@ -11,7 +11,9 @@ namespace data_models.Models
         private string _text;
         private DateTime _pubDate;
         private User _author;
+        private User _recipient;
         private int _state;
+        private int _recipientMsgState;
 
         public Message()
         { }
@@ -96,6 +98,22 @@ namespace data_models.Models
             }
         }
 
+        public User Recipient
+        {
+            get
+            {
+                return _recipient;
+            }
+            set
+            {
+                if (value != _recipient)
+                {
+                    _recipient = value;
+                    OnPropertyChanged("Recipient");
+                }
+            }
+        }
+
         public int State
         {
             get
@@ -108,6 +126,22 @@ namespace data_models.Models
                 {
                     _state = value;
                     OnPropertyChanged("State");
+                }
+            }
+        }
+
+        public int RecipientMsgState
+        {
+            get
+            {
+                return _recipientMsgState;
+            }
+            set
+            {
+                if (value != _recipientMsgState)
+                {
+                    _recipientMsgState = value;
+                    OnPropertyChanged("RecipientMsgState");
                 }
             }
         }
