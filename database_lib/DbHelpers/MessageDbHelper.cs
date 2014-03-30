@@ -408,7 +408,7 @@ namespace database_lib.DbHelpers
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE))
                 {
-                    message.RecipientMsgState = Convert.ToInt32(DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE);
+                    message.RecipientMsgState = Convert.ToInt32(dataReader[DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE]);
                 }
 
                 message.Author = GetMessageAuthorFromQueryResult(dataReader);
@@ -427,7 +427,7 @@ namespace database_lib.DbHelpers
             {
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_ID))
                 {
-                    author.Id = Convert.ToInt32(DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_ID);
+                    author.Id = Convert.ToInt32(dataReader[DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_ID]);
                 }
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_FIRST_NAME))
@@ -458,7 +458,7 @@ namespace database_lib.DbHelpers
             {
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID))
                 {
-                    recipient.Id = Convert.ToInt32(DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID);
+                    recipient.Id = Convert.ToInt32(dataReader[DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID]);
                 }
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_FIRST_NAME))
@@ -473,7 +473,7 @@ namespace database_lib.DbHelpers
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_STATE))
                 {
-                    recipient.State = Convert.ToInt32(DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_STATE);
+                    recipient.State = Convert.ToInt32(dataReader[DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_STATE]);
                 }
             }
 
