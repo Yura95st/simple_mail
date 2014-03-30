@@ -9,7 +9,7 @@ namespace simple_mail.ViewModels
     public class InboxMessagesViewModel : BaseViewModel, IPageViewModel
     {
         private List<Message> _messagesList = new List<Message>();
-        private MessageDbHelper _messageDbHelper = new MessageDbHelper();
+        private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
 
         private ICommand _markMsgAsUnreadCommand;
         private ICommand _moveMsgToTrashCommand;
@@ -82,17 +82,8 @@ namespace simple_mail.ViewModels
 
         private void ReadMessage(Message msg)
         {
-            //DEBUG
-            try
-            {
-                _messageDbHelper.ReadMessage(msg.Id, AuthorizationViewModel.LoggedUserId);
-            }
-            catch
-            {
-                return;
-            }
-
-            msg.RecipientMsgState = (int)MessageDbHelper.RecipientMessageState.Read;
+            ReadMessageViewModel.ReadMessageId = msg.Id;
+            ViewModelCommunication.Messaging.NotifyColleagues(ViewModelCommunication.ReadMessage);
         }
 
         private bool IsMessageRead(Message msg)
@@ -142,7 +133,15 @@ namespace simple_mail.ViewModels
 
         private void GetInbox()
         {
-            _messagesList = _messageDbHelper.GetInboxMessages(AuthorizationViewModel.LoggedUserId);
+            try
+            {
+                MessagesList = _messageDbHelper.GetInboxMessages(AuthorizationViewModel.LoggedUserId);
+            }
+            catch
+            {
+                //TODO: handle all possible exceptions
+                return;
+            }
         }
     }
 }

@@ -37,5 +37,21 @@ namespace simple_mail.ViewModels
                 return "UserLoggedOut";
             }
         }
+
+        public static string ReadMessage
+        {
+            get
+            {
+                return "ReadMessage";
+            }
+        }
+
+        public static string SentMessage
+        {
+            get
+            {
+                return "SentMessage";
+            }
+        }
     }
 }

@@ -18,20 +18,25 @@ namespace simple_mail.ViewModels
 
         public ApplicationViewModel()
         {
+            // register to messages from pageViewModels
             RegisterToLogInUserMessage();
             RegisterToLogOutUserMessage();
+            RegisterToReadMessageMessage();
+            RegisterToSentMessageMessage();
 
             // list of available pages
             AuthorizationViewModel = new AuthorizationViewModel();
             RegistrationViewModel = new RegistrationViewModel();
             InboxMessagesViewModel = new InboxMessagesViewModel();
             SentMessagesViewModel = new SentMessagesViewModel();
+            ReadMessageViewModel = new ReadMessageViewModel();
 
             // Add available pages
             PageViewModels.Add(this.AuthorizationViewModel);
             PageViewModels.Add(this.RegistrationViewModel);
             PageViewModels.Add(this.InboxMessagesViewModel);
             PageViewModels.Add(this.SentMessagesViewModel);
+            PageViewModels.Add(this.ReadMessageViewModel);
 
             // Set starting page
             this.ChangeViewModel(AuthorizationViewModel);
@@ -58,6 +63,12 @@ namespace simple_mail.ViewModels
         }
 
         public IPageViewModel SentMessagesViewModel
+        {
+            get;
+            set;
+        }
+
+        public IPageViewModel ReadMessageViewModel
         {
             get;
             set;
@@ -133,6 +144,22 @@ namespace simple_mail.ViewModels
             ViewModelCommunication.Messaging.Register(ViewModelCommunication.UserLoggedOut, (Action)delegate()
             {
                 this.ChangeViewModel(AuthorizationViewModel);
+            });
+        }
+
+        private void RegisterToReadMessageMessage()
+        {
+            ViewModelCommunication.Messaging.Register(ViewModelCommunication.ReadMessage, (Action)delegate()
+            {
+                this.ChangeViewModel(ReadMessageViewModel);
+            });
+        }
+
+        private void RegisterToSentMessageMessage()
+        {
+            ViewModelCommunication.Messaging.Register(ViewModelCommunication.SentMessage, (Action)delegate()
+            {
+                this.ChangeViewModel(InboxMessagesViewModel);
             });
         }
 
