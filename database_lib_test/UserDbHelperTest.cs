@@ -9,7 +9,7 @@ namespace library_database_lib_test
     [TestClass]
     public class UserDbHelperTest
     {
-        UserDbHelper userDbHelper = new UserDbHelper();
+        UserDbHelper userDbHelper = UserDbHelper.Instance;
 
         [TestInitialize]
         public void UserDbHelperTestInit()

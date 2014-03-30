@@ -11,7 +11,7 @@ namespace simple_mail.ViewModels
     public class RegistrationViewModel : BaseViewModel, IPageViewModel
     {
         private User _userModel = new User();
-        private UserDbHelper _userDbHelper = new UserDbHelper();
+        private UserDbHelper _userDbHelper = UserDbHelper.Instance;
 
         private ICommand _signUpCommand;
         private string _confirmPassword = "";

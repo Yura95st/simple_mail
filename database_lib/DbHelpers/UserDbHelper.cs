@@ -12,6 +12,8 @@ namespace database_lib.DbHelpers
 {
     public class UserDbHelper : BaseDbHelper
     {
+        private static UserDbHelper _instance;
+
         //SELECT u.user_id, u.first_name, u.email, u.password, u.state
         //FROM users u
         private string selectUsersCommand = String.Format(@"
@@ -24,10 +26,20 @@ namespace database_lib.DbHelpers
             DbValues.USERS_COLUMN_PASSWORD, DbValues.USERS_CAPTION_COLUMN_PASSWORD,
             DbValues.USERS_COLUMN_STATE, DbValues.USERS_CAPTION_COLUMN_STATE,
             DbValues.TABLE_USERS
-        );
+        );        
 
-        public UserDbHelper()
+        private UserDbHelper() { }
+
+        public static UserDbHelper Instance
         {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new UserDbHelper();
+                }
+                return _instance;
+            }
         }
 
         // gets all users

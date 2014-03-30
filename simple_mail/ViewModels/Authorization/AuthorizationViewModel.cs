@@ -10,7 +10,7 @@ namespace simple_mail.ViewModels
     public class AuthorizationViewModel : BaseViewModel, IPageViewModel
     {
         private User _userModel = new User();
-        private UserDbHelper _userDbHelper = new UserDbHelper();
+        private UserDbHelper _userDbHelper = UserDbHelper.Instance;
 
         private ICommand _signInCommand;
         private ICommand _logOutCommand;
@@ -118,7 +118,7 @@ namespace simple_mail.ViewModels
                 return;
             }
 
-            AuthorizationViewModel.LoggedUserId = userId;
+            LoggedUserId = userId;
             ViewModelCommunication.Messaging.NotifyColleagues(ViewModelCommunication.UserLoggedIn);
         }
 
@@ -126,14 +126,14 @@ namespace simple_mail.ViewModels
         {
             try
             {
-                _userDbHelper.LogOutUser(AuthorizationViewModel.LoggedUserId);
+                _userDbHelper.LogOutUser(LoggedUserId);
             }
             catch (ArgumentOutOfRangeException e)
             {
                 return;
             }
 
-            AuthorizationViewModel.LoggedUserId = 0;
+            LoggedUserId = 0;
             ViewModelCommunication.Messaging.NotifyColleagues(ViewModelCommunication.UserLoggedOut);
         }
 
@@ -144,7 +144,7 @@ namespace simple_mail.ViewModels
 
         private bool IsUserLoggedIn()
         {
-            return AuthorizationViewModel.LoggedUserId > 0;
+            return LoggedUserId > 0;
         }
     }
 }

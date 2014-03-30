@@ -12,6 +12,8 @@ namespace database_lib.DbHelpers
 {
     public class MessageDbHelper : BaseDbHelper
     {
+        private static MessageDbHelper _instance;        
+
         public enum AuthorMessageState
         {
             InitState = 0,
@@ -59,8 +61,18 @@ namespace database_lib.DbHelpers
             DbValues.TABLE_MESSAGES_VIEW
         );
 
-        public MessageDbHelper()
+        private MessageDbHelper() { }
+
+        public static MessageDbHelper Instance
         {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new MessageDbHelper();
+                }
+                return _instance;
+            }
         }
 
         // gets message by it's id number
