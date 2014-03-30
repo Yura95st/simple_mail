@@ -10,6 +10,8 @@ namespace simple_mail.ViewModels
     public class AuthorizationViewModel : BaseViewModel, IPageViewModel
     {
         private User _userModel = new User();
+        private UserDbHelper _userDbHelper = new UserDbHelper();
+
         private ICommand _signInCommand;
         private ICommand _logOutCommand;
         private string _signInInfoMsg = "";
@@ -94,13 +96,11 @@ namespace simple_mail.ViewModels
         {
             SignInInfoMsg = "";
 
-            UserDbHelper userDbHelper = new UserDbHelper();
-
             int userId = 0;
 
             try
             {
-                userId = userDbHelper.LogInUser(UserModel);
+                userId = _userDbHelper.LogInUser(UserModel);
             }
             catch (InvalidEmailException e)
             {
@@ -124,11 +124,9 @@ namespace simple_mail.ViewModels
 
         private void LogOutUser()
         {
-            UserDbHelper userDbHelper = new UserDbHelper();
-
             try
             {
-                userDbHelper.LogOutUser(AuthorizationViewModel.LoggedUserId);
+                _userDbHelper.LogOutUser(AuthorizationViewModel.LoggedUserId);
             }
             catch (ArgumentOutOfRangeException e)
             {

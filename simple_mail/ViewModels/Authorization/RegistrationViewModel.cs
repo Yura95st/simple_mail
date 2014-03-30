@@ -11,6 +11,8 @@ namespace simple_mail.ViewModels
     public class RegistrationViewModel : BaseViewModel, IPageViewModel
     {
         private User _userModel = new User();
+        private UserDbHelper _userDbHelper = new UserDbHelper();
+
         private ICommand _signUpCommand;
         private string _confirmPassword = "";
         private string _signUpInfoMsg = "";
@@ -96,8 +98,6 @@ namespace simple_mail.ViewModels
         {
             SignUpInfoMsg = "";
 
-            UserDbHelper userDbHelper = new UserDbHelper();
-
             if (!MyValidation.AreTwoPasswordsEqual(UserModel.Password, ConfirmPassword))
             {
                 SignUpInfoMsg = "INFO: Passwords are not equal!";
@@ -106,7 +106,7 @@ namespace simple_mail.ViewModels
 
             try
             {
-                userDbHelper.AddNewUser(UserModel);
+                _userDbHelper.AddNewUser(UserModel);
             }
             catch (InvalidEmailException e)
             {
@@ -133,7 +133,7 @@ namespace simple_mail.ViewModels
 
             try
             {
-                userId = userDbHelper.LogInUser(UserModel);
+                userId = _userDbHelper.LogInUser(UserModel);
             }
             catch (Exception e)
             {
