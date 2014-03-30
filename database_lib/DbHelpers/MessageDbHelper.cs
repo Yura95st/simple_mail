@@ -475,7 +475,7 @@ namespace database_lib.DbHelpers
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_FIRST_NAME))
                 {
-                    recipient.FirstName = dataReader[DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_FIRST_NAME].ToString();
+                    recipient.FirstName = dataReader[DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_FIRST_NAME].ToString();
                 }
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_EMAIL))
