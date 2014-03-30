@@ -15,11 +15,48 @@
 
         <v:LeftNavigationPanelView Grid.Column="0" />
 
-        <Grid Grid.Column="1">
-            <TextBlock Text="This is the InboxMessagesView Page" 
-                   FontWeight="Bold" FontSize="18"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" />
-        </Grid>
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <ListView Grid.Row="2"
+                  ItemsSource="{Binding MessagesList, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="From" DisplayMemberBinding="{Binding Author.FirstName}"/>
+                        <GridViewColumn Header="Subject" DisplayMemberBinding="{Binding Subject}"/>
+                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding PubDate}"/>
+                    </GridView>
+                    
+                </ListView.View>
 
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=RecipientMsgState}" Value="3">
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Read" Command="{Binding ReadMsgCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                        
+                        <Separator />
+                        
+                        <MenuItem Header="Mark as unread" Command="{Binding MarkMsgAsUnreadCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                        <MenuItem Header="Move to trash" Command="{Binding MoveMsgToTrashCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                        <Separator />
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>
