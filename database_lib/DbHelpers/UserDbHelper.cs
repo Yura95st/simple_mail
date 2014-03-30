@@ -14,14 +14,17 @@ namespace database_lib.DbHelpers
     {
         //SELECT u.user_id, u.first_name, u.email, u.password, u.state
         //FROM users u
-        private string selectUsersCommand = @"
-            SELECT "
-            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_ID + " AS " + DbValues.USERS_CAPTION_COLUMN_ID + ", "
-            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_FIRST_NAME + " AS " + DbValues.USERS_CAPTION_COLUMN_FIRST_NAME + ", "
-            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_EMAIL + " AS " + DbValues.USERS_CAPTION_COLUMN_EMAIL + ", "
-            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_PASSWORD + " AS " + DbValues.USERS_CAPTION_COLUMN_PASSWORD + ", "
-            + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_STATE + " AS " + DbValues.USERS_CAPTION_COLUMN_STATE
-            + " FROM " + DbValues.TABLE_USERS + " " + DbValues.TABLE_CAPTION_USERS;
+        private string selectUsersCommand = String.Format(@"
+            SELECT {0}.{1} AS {2}, {0}.{3} AS {4}, {0}.{5} AS {6}, {0}.{7} AS {8}, {0}.{9} AS {10}
+            FROM {11} {0}",            
+            DbValues.TABLE_CAPTION_USERS, 
+            DbValues.USERS_COLUMN_ID, DbValues.USERS_CAPTION_COLUMN_ID,
+            DbValues.USERS_COLUMN_FIRST_NAME, DbValues.USERS_CAPTION_COLUMN_FIRST_NAME,
+            DbValues.USERS_COLUMN_EMAIL, DbValues.USERS_CAPTION_COLUMN_EMAIL,
+            DbValues.USERS_COLUMN_PASSWORD, DbValues.USERS_CAPTION_COLUMN_PASSWORD,
+            DbValues.USERS_COLUMN_STATE, DbValues.USERS_CAPTION_COLUMN_STATE,
+            DbValues.TABLE_USERS
+        );
 
         public UserDbHelper()
         {
@@ -74,8 +77,11 @@ namespace database_lib.DbHelpers
             SqlCommand cmd = new SqlCommand();
 
             //WHERE u.user_id IN (" + idString + ");
-            cmd.CommandText = selectUsersCommand +
-                @" WHERE " + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_ID + " IN (" + idString + ")";
+            cmd.CommandText = String.Format(@"
+                {0} WHERE {1}.{2} IN ({3})",
+                selectUsersCommand, DbValues.TABLE_CAPTION_USERS, 
+                DbValues.USERS_COLUMN_ID, idString
+            );
 
             return ExecuteSelectUsersCommand(cmd);
         }
@@ -92,9 +98,12 @@ namespace database_lib.DbHelpers
 
             SqlCommand cmd = new SqlCommand();
 
-            //WHERE u.email = @email;
-            cmd.CommandText = selectUsersCommand +
-                @" WHERE " + DbValues.TABLE_CAPTION_USERS + "." + DbValues.USERS_COLUMN_EMAIL + " = @email";
+            //WHERE u.email = @email
+            cmd.CommandText = String.Format(@"
+                {0} WHERE {1}.{2} = @email",
+                selectUsersCommand, DbValues.TABLE_CAPTION_USERS,
+                DbValues.USERS_COLUMN_EMAIL
+            );            
 
             cmd.Parameters.Add(new SqlParameter
             {
@@ -143,11 +152,13 @@ namespace database_lib.DbHelpers
 
             // INSERT INTO users(first_name, email, password, state) 
             // VALUES(@first_name, @email, @password, @state);
-            cmd.CommandText = @"
-                INSERT INTO " + DbValues.TABLE_USERS + "(" 
-                + DbValues.USERS_COLUMN_FIRST_NAME + ", " + DbValues.USERS_COLUMN_EMAIL + ", " 
-                + DbValues.USERS_COLUMN_PASSWORD + ", " + DbValues.USERS_COLUMN_STATE 
-                + ") VALUES(@first_name, @email, @password, @state); SELECT SCOPE_IDENTITY();";
+            cmd.CommandText = String.Format(@"
+                INSERT INTO {0}({1}, {2}, {3}, {4}) 
+                VALUES(@first_name, @email, @password, @state); SELECT SCOPE_IDENTITY();",
+                DbValues.TABLE_USERS,
+                DbValues.USERS_COLUMN_FIRST_NAME, DbValues.USERS_COLUMN_EMAIL,
+                DbValues.USERS_COLUMN_PASSWORD, DbValues.USERS_COLUMN_STATE 
+            );
 
             cmd.Parameters.Add(new SqlParameter
             {
@@ -255,7 +266,7 @@ namespace database_lib.DbHelpers
         {
             User user = new User();
 
-            try
+            if (dataReader != null)
             {
                 if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_ID))
                 {
@@ -264,27 +275,23 @@ namespace database_lib.DbHelpers
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_FIRST_NAME))
                 {
-                    user.FirstName = (string)dataReader[DbValues.USERS_CAPTION_COLUMN_FIRST_NAME];
+                    user.FirstName = dataReader[DbValues.USERS_CAPTION_COLUMN_FIRST_NAME].ToString();
                 }
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_EMAIL))
                 {
-                    user.Email = (string)dataReader[DbValues.USERS_CAPTION_COLUMN_EMAIL];
+                    user.Email = dataReader[DbValues.USERS_CAPTION_COLUMN_EMAIL].ToString();
                 }
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_PASSWORD))
                 {
-                    user.Password = (string)dataReader[DbValues.USERS_CAPTION_COLUMN_PASSWORD];
+                    user.Password = dataReader[DbValues.USERS_CAPTION_COLUMN_PASSWORD].ToString();
                 }
 
                 if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_STATE))
                 {
                     user.State = Convert.ToInt32(dataReader[DbValues.USERS_CAPTION_COLUMN_STATE]);
                 }
-            }
-            catch
-            {
-                return null;
             }
 
             return user;
@@ -309,7 +316,7 @@ namespace database_lib.DbHelpers
             {
                 connection.Open();
 
-                //bing opened connection to the command
+                //bind opened connection to the command
                 command.Connection = connection;
 
                 using (DbDataReader dataReader = command.ExecuteReader())
@@ -347,9 +354,12 @@ namespace database_lib.DbHelpers
 
             // UPDATE users SET state = @state
             // WHERE user_id = @user_id";
-            cmd.CommandText = @"
-                UPDATE " + DbValues.TABLE_USERS 
-                + " SET " + DbValues.USERS_COLUMN_STATE + " = @state WHERE " + DbValues.USERS_COLUMN_ID + " = @user_id";
+            cmd.CommandText = String.Format(@"
+                UPDATE {0} SET {1} = @state
+                WHERE {2} = @user_id",
+                DbValues.TABLE_USERS, DbValues.USERS_COLUMN_STATE, 
+                DbValues.USERS_COLUMN_ID
+            );
 
             cmd.Parameters.Add(new SqlParameter
             {
