@@ -159,7 +159,7 @@ namespace database_lib.DbHelpers
             cmd.Parameters.Add(new SqlParameter
             {
                 ParameterName = "@subject",
-                Value = message.Subject,
+                Value = message.Subject.Trim(),
                 SqlDbType = SqlDbType.VarChar
             });
 

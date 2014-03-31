@@ -24,7 +24,11 @@ namespace data_models.Models
         }
 
         private Notification()
-        { }
+        {
+            _text = "";
+            _type = (int)States.Collapsed;
+            _state = (int)Types.Info; 
+        }
 
         // singleton
         public static Notification Instance

@@ -120,7 +120,7 @@ namespace database_lib.DbHelpers
             cmd.Parameters.Add(new SqlParameter
             {
                 ParameterName = "@email",
-                Value = email,
+                Value = email.ToLower(),
                 SqlDbType = SqlDbType.VarChar
             });
 
@@ -182,7 +182,7 @@ namespace database_lib.DbHelpers
             cmd.Parameters.Add(new SqlParameter
             {
                 ParameterName = "@email",
-                Value = user.Email,
+                Value = user.Email.ToLower(),
                 SqlDbType = SqlDbType.VarChar
             });
 

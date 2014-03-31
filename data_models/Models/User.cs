@@ -11,7 +11,13 @@ namespace data_models.Models
         private int _state;
 
         public User()
-        { }
+        {
+            _id = 0;
+            _fistName = "";
+            _email = "";
+            _password = "";
+            _state = -1;
+        }
 
         public int Id
         {
@@ -54,7 +60,7 @@ namespace data_models.Models
             {
                 if (value != _email)
                 {
-                    _email = value.Trim().ToLower();
+                    _email = value.Trim();
                     OnPropertyChanged("Email");
                 }
             }

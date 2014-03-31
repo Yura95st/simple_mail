@@ -74,12 +74,12 @@ namespace data_models.Validations
 
         public static void CheckValidMessageFields(Message message)
         {
-            if (string.Equals(message.Subject, ""))
+            if (string.Equals(message.Subject.Trim(), ""))
             {
                 throw new EmtpyMessageSubjectException();
             }
 
-            if (string.Equals(message.Text, ""))
+            if (string.Equals(message.Text.Trim(), ""))
             {
                 throw new EmptyMessageTextException();
             }

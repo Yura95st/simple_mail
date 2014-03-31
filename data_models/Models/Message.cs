@@ -10,13 +10,22 @@ namespace data_models.Models
         private string _subject;
         private string _text;
         private DateTime _pubDate;
-        private User _author = new User();
-        private User _recipient = new User();
+        private User _author;
+        private User _recipient;
         private int _state;
         private int _recipientMsgState;
 
         public Message()
-        { }
+        {
+            _id = 0;
+            _subject = "";
+            _text = "";
+            _pubDate = new DateTime();
+            _author = new User();
+            _recipient = new User();
+            _state = -1;
+            _recipientMsgState = -1; 
+        }
 
         public int Id
         {
@@ -44,7 +53,7 @@ namespace data_models.Models
             {
                 if (value != _subject)
                 {
-                    _subject = value.Trim();
+                    _subject = value;
                     OnPropertyChanged("Subject");
                 }
             }
@@ -60,7 +69,7 @@ namespace data_models.Models
             {
                 if (value != _text)
                 {
-                    _text = value.Trim().ToLower();
+                    _text = value;
                     OnPropertyChanged("Text");
                 }
             }
