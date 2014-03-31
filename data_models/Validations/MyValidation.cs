@@ -94,5 +94,19 @@ namespace data_models.Validations
                 throw new InvalidMessageRecipientException();
             }
         }
+
+        public static string CreateReplySubject(string subject)
+        {
+            //const string replyWord = "Re";
+            string replySubject = "";
+
+            //int first = subject.IndexOf("methods
+            //Regex ReplyRegex = new Regex(@"[^a-z0-9àáâäèéêëìíîïòóôöùûŵýÿyÁÂÄÈÉÊËÌÎÏÒÓÔÖÙÛÜŴYÝ]", RegexOptions.IgnoreCase
+            //value = PunctuationStripper.Replace(value, "");
+
+            replySubject = string.Format("Re: {0}", subject);
+
+            return replySubject;
+        }
     }
 }
