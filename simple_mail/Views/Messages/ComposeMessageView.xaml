@@ -27,7 +27,7 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Content="To:" Margin="-5,0,0,0" />
-            <TextBox Grid.Row="1" Padding="0 3" Margin="0" Text="{Binding Path=RecipientEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="1" Padding="0 3" Margin="0" Text="{Binding Path=MessageModel.Recipient.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="2" Content="Subject:" Margin="-5,0,0,0" />
             <TextBox Grid.Row="3" Padding="0 3" Margin="0" Text="{Binding Path=MessageModel.Subject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

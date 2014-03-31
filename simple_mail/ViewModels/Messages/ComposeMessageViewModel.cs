@@ -12,6 +12,7 @@ namespace simple_mail.ViewModels
     {
         private Message _messageModel = new Message();
         private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
+        private UserDbHelper _userDbHelper = UserDbHelper.Instance;
         private Notification _notification = Notification.Instance;
 
         private ICommand _sendMessageCommand;
@@ -53,11 +54,8 @@ namespace simple_mail.ViewModels
 
         private bool IsMessageValid()
         {
-            try
-            {
-                MyValidation.CheckValidMessageFields(MessageModel);
-            }
-            catch 
+            if (string.Equals(MessageModel.Subject.Trim(), "") || string.Equals(MessageModel.Text.Trim(), "")
+                || MessageModel.Author.Id <= 0 || string.Equals(MessageModel.Recipient.Email.Trim(), ""))
             {
                 return false;
             }
@@ -67,6 +65,29 @@ namespace simple_mail.ViewModels
 
         private void SendMessage()
         {
+            User recipient = null;
+            try 
+            {
+                recipient = _userDbHelper.GetUserByEmail(MessageModel.Recipient.Email);
+            }
+            catch (InvalidEmailException e)
+            {
+                _notification.Text = "Email is invalid!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
+                return;
+            }
+
+            if (recipient == null) 
+            {
+                _notification.Text = "There is no user with this email!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
+                return;
+            }
+
+            MessageModel.Recipient = recipient;
+
             try
             {
                 _messageDbHelper.AddNewMessage(MessageModel);
@@ -110,6 +131,7 @@ namespace simple_mail.ViewModels
         public void OnShow()
         {
             MessageModel.Author.Id = AuthorizationViewModel.LoggedUserId;
+            MessageModel.Recipient.Email = "";
             MessageModel.Subject = "";
             MessageModel.Text = "";
         }
