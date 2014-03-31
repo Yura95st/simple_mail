@@ -8,7 +8,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Padding="0,10" Margin="5,5,5,20" Content="Compose"></Button>
+        <Button Grid.Row="0" Padding="0,10" Margin="5,5,5,20" Content="Compose"
+                    Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    CommandParameter="{Binding DataContext.ComposeMessageViewModel, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
 
         <StackPanel Grid.Row="1">
             <Button Margin="5" Content="Inbox"
