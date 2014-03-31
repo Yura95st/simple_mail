@@ -71,5 +71,28 @@ namespace data_models.Validations
         {
             return String.Equals(pass1, pass2);
         }
+
+        public static void CheckValidMessageFields(Message message)
+        {
+            if (string.Equals(message.Subject, ""))
+            {
+                throw new EmtpyMessageSubjectException();
+            }
+
+            if (string.Equals(message.Text, ""))
+            {
+                throw new EmptyMessageTextException();
+            }
+
+            if (message.Author.Id <=0)
+            {
+                throw new InvalidMessageAuthorException();
+            }
+
+            if (message.Recipient.Id <= 0)
+            {
+                throw new InvalidMessageRecipientException();
+            }
+        }
     }
 }
