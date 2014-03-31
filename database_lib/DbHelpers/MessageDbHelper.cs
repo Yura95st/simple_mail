@@ -320,7 +320,7 @@ namespace database_lib.DbHelpers
                                 OR ({3} = @user_id AND {4} = {5})",
                             DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_ID, DbValues.MESSAGES_VIEW_COLUMN_STATE,
                             (int)AuthorMessageState.MovedToTrash, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID,
-                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_STATE, (int)RecipientMessageState.MovedToTrash
+                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE, (int)RecipientMessageState.MovedToTrash
                         );
                         break;
                     }
