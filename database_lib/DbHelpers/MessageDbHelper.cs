@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace database_lib.DbHelpers
 {
@@ -520,7 +521,7 @@ namespace database_lib.DbHelpers
                 connection.Close();
             }
 
-            return messages;
+            return messages.OrderByDescending(m => m.PubDate).ToList();
         }
 
         // changes author message state: 0 - init state, 1 - moved to trash, 2 - deleted
