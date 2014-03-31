@@ -27,15 +27,21 @@ namespace simple_mail.ViewModels
             // list of available pages
             AuthorizationViewModel = new AuthorizationViewModel();
             RegistrationViewModel = new RegistrationViewModel();
+
             InboxMessagesViewModel = new InboxMessagesViewModel();
             SentMessagesViewModel = new SentMessagesViewModel();
+            TrashMessagesViewModel = new TrashMessagesViewModel();
+
             ReadMessageViewModel = new ReadMessageViewModel();
 
             // Add available pages
             PageViewModels.Add(this.AuthorizationViewModel);
             PageViewModels.Add(this.RegistrationViewModel);
+
             PageViewModels.Add(this.InboxMessagesViewModel);
             PageViewModels.Add(this.SentMessagesViewModel);
+            PageViewModels.Add(this.TrashMessagesViewModel);
+
             PageViewModels.Add(this.ReadMessageViewModel);
 
             // Set starting page
@@ -63,6 +69,12 @@ namespace simple_mail.ViewModels
         }
 
         public IPageViewModel SentMessagesViewModel
+        {
+            get;
+            set;
+        }
+
+        public IPageViewModel TrashMessagesViewModel
         {
             get;
             set;

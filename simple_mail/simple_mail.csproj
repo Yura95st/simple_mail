@@ -64,6 +64,7 @@
     <Compile Include="ViewModels\IPageViewModel.cs" />
     <Compile Include="ViewModels\Messages\InboxMessagesViewModel.cs" />
     <Compile Include="ViewModels\Messages\ReadMessageViewModel.cs" />
+    <Compile Include="ViewModels\Messages\TrashMessagesViewModel.cs" />
     <Compile Include="ViewModels\Messages\SentMessagesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelCommunication.cs" />
     <Compile Include="Views\ApplicationView.xaml.cs">
@@ -83,6 +84,9 @@
     </Compile>
     <Compile Include="Views\Messages\ReadMessage.xaml.cs">
       <DependentUpon>ReadMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Messages\TrashMessagesView.xaml.cs">
+      <DependentUpon>TrashMessagesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Messages\SentMessagesView.xaml.cs">
       <DependentUpon>SentMessagesView.xaml</DependentUpon>
@@ -152,6 +156,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Messages\ReadMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Messages\TrashMessagesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

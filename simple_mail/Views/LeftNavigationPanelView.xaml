@@ -18,7 +18,11 @@
             <Button Margin="5" Content="Sent"
                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                     CommandParameter="{Binding DataContext.SentMessagesViewModel, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-
+            
+            <Button Margin="5" Content="Trash"
+                    Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    CommandParameter="{Binding DataContext.TrashMessagesViewModel, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+            
             <Button Margin="5" Content="Log Out"
                     Command="{Binding DataContext.AuthorizationViewModel.LogOutCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
         </StackPanel>

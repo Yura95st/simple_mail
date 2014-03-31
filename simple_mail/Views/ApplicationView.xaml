@@ -14,6 +14,10 @@
             <v:SentMessagesView />
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type vm:TrashMessagesViewModel}">
+            <v:TrashMessagesView />
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vm:RegistrationViewModel}">
             <v:RegistrationView />
         </DataTemplate>
