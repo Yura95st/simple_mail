@@ -38,7 +38,7 @@ namespace data_models.Models
             {
                 if (value != _fistName)
                 {
-                    _fistName = value;
+                    _fistName = value.Trim();
                     OnPropertyChanged("FirstName");
                 }
             }
@@ -54,7 +54,7 @@ namespace data_models.Models
             {
                 if (value != _email)
                 {
-                    _email = value.ToLower();
+                    _email = value.Trim().ToLower();
                     OnPropertyChanged("Email");
                 }
             }
@@ -70,7 +70,7 @@ namespace data_models.Models
             {
                 if (value != _password)
                 {
-                    _password = value;
+                    _password = value.Trim();
                     OnPropertyChanged("Password");
                 }
             }

@@ -44,7 +44,7 @@ namespace data_models.Models
             {
                 if (value != _subject)
                 {
-                    _subject = value;
+                    _subject = value.Trim();
                     OnPropertyChanged("Subject");
                 }
             }
@@ -60,7 +60,7 @@ namespace data_models.Models
             {
                 if (value != _text)
                 {
-                    _text = value.ToLower();
+                    _text = value.Trim().ToLower();
                     OnPropertyChanged("Text");
                 }
             }

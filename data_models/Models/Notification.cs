@@ -49,7 +49,7 @@ namespace data_models.Models
             {
                 if (value != _text)
                 {
-                    _text = value;
+                    _text = value.Trim();
                     OnPropertyChanged("Text");
                 }
             }
