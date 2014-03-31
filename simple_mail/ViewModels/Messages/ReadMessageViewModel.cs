@@ -1,5 +1,6 @@
 ﻿using data_models.Exceptions;
 using data_models.Models;
+using data_models.Validations;
 using database_lib.DbHelpers;
 using simple_mail.HelperClasses;
 using System;
@@ -77,9 +78,22 @@ namespace simple_mail.ViewModels
         {
             Message msg = new Message();
 
-            msg.Author = MessageModel.Recipient;
-            msg.Recipient = MessageModel.Author;
-            msg.Subject = string.Format("Re: {0}", MessageModel.Subject);
+            if (MessageModel.Author.Id == AuthorizationViewModel.LoggedUserId)
+            {
+                msg.Author = MessageModel.Author;
+                msg.Recipient = MessageModel.Recipient;
+            }
+            else if (MessageModel.Recipient.Id == AuthorizationViewModel.LoggedUserId)
+            {
+                msg.Author = MessageModel.Recipient;
+                msg.Recipient = MessageModel.Author;
+            }
+            else 
+            {
+                return;
+            }
+
+            msg.Subject = MyValidation.CreateReplySubject(MessageModel.Subject);
             msg.Text = ReplyMessageText;
 
             try
@@ -113,8 +127,12 @@ namespace simple_mail.ViewModels
             {
                 MessageModel = _messageDbHelper.GetMessageById(ReadMessageId);
 
-                // Set message's state to "Read"
-                _messageDbHelper.ReadMessage(ReadMessageId, AuthorizationViewModel.LoggedUserId);
+                if (MessageModel.Recipient.Id == AuthorizationViewModel.LoggedUserId && 
+                    MessageModel.RecipientMsgState == (int)MessageDbHelper.RecipientMessageState.Unread)
+                {
+                    // Set message's state to "Read"
+                    _messageDbHelper.ReadMessage(ReadMessageId, AuthorizationViewModel.LoggedUserId);
+                }
             }
             catch (ArgumentOutOfRangeException e)
             {
