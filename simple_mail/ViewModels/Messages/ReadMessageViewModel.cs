@@ -1,6 +1,8 @@
-﻿using data_models.Models;
+﻿using data_models.Exceptions;
+using data_models.Models;
 using database_lib.DbHelpers;
 using simple_mail.HelperClasses;
+using System;
 using System.Windows.Input;
 
 namespace simple_mail.ViewModels
@@ -84,10 +86,22 @@ namespace simple_mail.ViewModels
             {
                 _messageDbHelper.AddNewMessage(msg);
             }
-            catch
+            catch(EmtpyMessageSubjectException e)
             {
-                //TODO: handle all possible exceptions
                 return; 
+            }
+            catch(EmptyMessageTextException e)
+            {
+                return; 
+            }
+            catch(InvalidMessageAuthorException e)
+            {
+                return; 
+            }
+            catch(InvalidMessageRecipientException e)
+            {
+                return; 
+
             }
 
             ViewModelCommunication.Messaging.NotifyColleagues(ViewModelCommunication.SentMessage);
@@ -102,9 +116,8 @@ namespace simple_mail.ViewModels
                 // Set message's state to "Read"
                 _messageDbHelper.ReadMessage(ReadMessageId, AuthorizationViewModel.LoggedUserId);
             }
-            catch
+            catch (ArgumentOutOfRangeException e)
             {
-                //TODO: handle all possible exceptions
                 return;
             }
         }

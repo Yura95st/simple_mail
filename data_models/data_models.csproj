@@ -39,15 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\InvalidFirstNameException.cs" />
+    <Compile Include="Exceptions\EmptyMessageTextException.cs" />
+    <Compile Include="Exceptions\EmtpyMessageSubjectException.cs" />
     <Compile Include="Exceptions\InvalidEmailException.cs" />
+    <Compile Include="Exceptions\InvalidFirstNameException.cs" />
+    <Compile Include="Exceptions\InvalidMessageAuthorException.cs" />
+    <Compile Include="Exceptions\InvalidMessageRecipientException.cs" />
+    <Compile Include="Exceptions\InvalidPasswordException.cs" />
     <Compile Include="Exceptions\UserAlreadyExistsException.cs" />
     <Compile Include="Exceptions\UserDoesNotExistException.cs" />
     <Compile Include="HelperClasses\ObservableObject.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Exceptions\InvalidPasswordException.cs" />
     <Compile Include="Validations\MyValidation.cs" />
   </ItemGroup>
   <ItemGroup />

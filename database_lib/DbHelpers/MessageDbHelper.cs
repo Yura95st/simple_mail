@@ -63,6 +63,7 @@ namespace database_lib.DbHelpers
 
         private MessageDbHelper() { }
 
+        // singleton
         public static MessageDbHelper Instance
         {
             get

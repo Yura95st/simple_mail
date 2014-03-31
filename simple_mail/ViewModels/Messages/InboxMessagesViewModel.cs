@@ -1,6 +1,7 @@
 ﻿using data_models.Models;
 using database_lib.DbHelpers;
 using simple_mail.HelperClasses;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 
@@ -111,7 +112,7 @@ namespace simple_mail.ViewModels
             {
                 _messageDbHelper.MoveToTrashRecipientMessage(msg.Id, AuthorizationViewModel.LoggedUserId);
             }
-            catch
+            catch (ArgumentOutOfRangeException e)
             {
                 return;
             }
@@ -137,9 +138,8 @@ namespace simple_mail.ViewModels
             {
                 MessagesList = _messageDbHelper.GetInboxMessages(AuthorizationViewModel.LoggedUserId);
             }
-            catch
+            catch (ArgumentOutOfRangeException e)
             {
-                //TODO: handle all possible exceptions
                 return;
             }
         }

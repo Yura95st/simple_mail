@@ -53,16 +53,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="HelperClasses\Messenger.cs" />
-    <Compile Include="HelperClasses\PasswordBoxAssistant.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
-    <Compile Include="ViewModels\IPageViewModel.cs" />
-    <Compile Include="ViewModels\Authorization\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\Authorization\AuthorizationViewModel.cs" />
+    <Compile Include="ViewModels\Authorization\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\IPageViewModel.cs" />
+    <Compile Include="ViewModels\Messages\InboxMessagesViewModel.cs" />
     <Compile Include="ViewModels\Messages\ReadMessageViewModel.cs" />
     <Compile Include="ViewModels\Messages\SentMessagesViewModel.cs" />
-    <Compile Include="ViewModels\Messages\InboxMessagesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelCommunication.cs" />
     <Compile Include="Views\ApplicationView.xaml.cs">
       <DependentUpon>ApplicationView.xaml</DependentUpon>
@@ -73,53 +75,23 @@
     <Compile Include="Views\Authorization\RegistrationView.xaml.cs">
       <DependentUpon>RegistrationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LeftNavigationPanelView.xaml.cs">
+      <DependentUpon>LeftNavigationPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Messages\InboxMessagesView.xaml.cs">
+      <DependentUpon>InboxMessagesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Messages\ReadMessage.xaml.cs">
       <DependentUpon>ReadMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Messages\SentMessagesView.xaml.cs">
       <DependentUpon>SentMessagesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Messages\InboxMessagesView.xaml.cs">
-      <DependentUpon>InboxMessagesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LeftNavigationPanelView.xaml.cs">
-      <DependentUpon>LeftNavigationPanelView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="HelperClasses\RelayCommand.cs" />
-    <Page Include="Views\ApplicationView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Authorization\AuthorizationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Authorization\RegistrationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Messages\ReadMessage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Messages\SentMessagesView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Messages\InboxMessagesView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\LeftNavigationPanelView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelperClasses\Messenger.cs" />
+    <Compile Include="HelperClasses\PasswordBoxAssistant.cs" />
+    <Compile Include="HelperClasses\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -144,7 +116,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\database_lib\database_lib.csproj">
@@ -156,6 +130,37 @@
       <Name>data_models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\ApplicationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Authorization\AuthorizationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Authorization\RegistrationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LeftNavigationPanelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Messages\InboxMessagesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Messages\ReadMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Messages\SentMessagesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
