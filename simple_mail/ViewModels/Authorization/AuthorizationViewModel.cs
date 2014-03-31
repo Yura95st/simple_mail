@@ -11,10 +11,10 @@ namespace simple_mail.ViewModels
     {
         private User _userModel = new User();
         private UserDbHelper _userDbHelper = UserDbHelper.Instance;
+        private Notification _notification = Notification.Instance;
 
         private ICommand _signInCommand;
         private ICommand _logOutCommand;
-        private string _signInInfoMsg = "";
 
         public static int LoggedUserId = 0;
 
@@ -36,22 +36,6 @@ namespace simple_mail.ViewModels
                 {
                     _userModel = value;
                     OnPropertyChanged("UserModel");
-                }
-            }
-        }
-
-        public string SignInInfoMsg
-        {
-            get
-            {
-                return _signInInfoMsg;
-            }
-            set
-            {
-                if (value != _signInInfoMsg)
-                {
-                    _signInInfoMsg = value;
-                    OnPropertyChanged("SignInInfoMsg");
                 }
             }
         }
@@ -94,8 +78,6 @@ namespace simple_mail.ViewModels
 
         private void AuthorizeUser()
         {
-            SignInInfoMsg = "";
-
             int userId = 0;
 
             try
@@ -104,17 +86,23 @@ namespace simple_mail.ViewModels
             }
             catch (InvalidEmailException e)
             {
-                SignInInfoMsg = "INFO: Email is invalid!";
+                _notification.Text = "Email is invalid!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
             catch (UserDoesNotExistException e)
             {
-                SignInInfoMsg = "INFO: Couldn't log you in as " + UserModel.Email;
+                _notification.Text = "Couldn't log you in as " + UserModel.Email;
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
             catch (InvalidPasswordException e)
             {
-                SignInInfoMsg = "INFO: Password is invalid!";
+                _notification.Text = "Password is invalid!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
 
@@ -130,7 +118,9 @@ namespace simple_mail.ViewModels
             }
             catch (ArgumentOutOfRangeException e)
             {
-                return;
+                _notification.Text = string.Format("An error occured. Please, try again later.{0}", "DEBUG: " + e.Message);
+                _notification.Type = (int)Notification.Types.Error;
+                ApplicationViewModel.ShowNotificationBox(_notification);
             }
 
             LoggedUserId = 0;

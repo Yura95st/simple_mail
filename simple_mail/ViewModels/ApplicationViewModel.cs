@@ -1,4 +1,5 @@
-﻿using simple_mail.HelperClasses;
+﻿using data_models.Models;
+using simple_mail.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace simple_mail.ViewModels
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
 
+        private Notification _notificationBox = Notification.Instance;
+
         #endregion
 
         public ApplicationViewModel()
@@ -24,6 +27,9 @@ namespace simple_mail.ViewModels
             RegisterToReadMessageMessage();
             RegisterToSentMessageMessage();
 
+            // notifications about error/info from ViewModels will be shown in the NotificationBox
+            RegisterToNotificationMessage();
+
             // list of available pages
             AuthorizationViewModel = new AuthorizationViewModel();
             RegistrationViewModel = new RegistrationViewModel();
@@ -33,6 +39,8 @@ namespace simple_mail.ViewModels
             TrashMessagesViewModel = new TrashMessagesViewModel();
 
             ReadMessageViewModel = new ReadMessageViewModel();
+            ComposeMessageViewModel = new ComposeMessageViewModel();
+            
 
             // Add available pages
             PageViewModels.Add(this.AuthorizationViewModel);
@@ -43,6 +51,7 @@ namespace simple_mail.ViewModels
             PageViewModels.Add(this.TrashMessagesViewModel);
 
             PageViewModels.Add(this.ReadMessageViewModel);
+            PageViewModels.Add(this.ComposeMessageViewModel);
 
             // Set starting page
             this.ChangeViewModel(AuthorizationViewModel);
@@ -81,6 +90,12 @@ namespace simple_mail.ViewModels
         }
 
         public IPageViewModel ReadMessageViewModel
+        {
+            get;
+            set;
+        }
+
+        public IPageViewModel ComposeMessageViewModel
         {
             get;
             set;
@@ -128,6 +143,22 @@ namespace simple_mail.ViewModels
             }
         }
 
+        public Notification NotificationBox
+        {
+            get 
+            {
+                return _notificationBox;
+            }
+            set 
+            {
+                if (_notificationBox != value)
+                {
+                    _notificationBox = value;
+                    OnPropertyChanged("NotificationBox");
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -139,6 +170,8 @@ namespace simple_mail.ViewModels
 
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
+
+            HideNotificationBox();
 
             viewModel.OnShow();
         }
@@ -173,6 +206,26 @@ namespace simple_mail.ViewModels
             {
                 this.ChangeViewModel(InboxMessagesViewModel);
             });
+        }
+
+        private void RegisterToNotificationMessage()
+        {
+            ViewModelCommunication.Messaging.Register(ViewModelCommunication.Notification, (Action<Notification>)delegate(Notification notification)
+            {
+                NotificationBox = notification;
+            });
+        }
+
+        public static void ShowNotificationBox(Notification notification)
+        {
+            notification.State = (int)Notification.States.Visible;
+            ViewModelCommunication.Messaging.NotifyColleagues(ViewModelCommunication.Notification, notification);
+        }
+
+        private void HideNotificationBox()
+        {
+            NotificationBox.Text = "";
+            NotificationBox.State = (int)Notification.States.Collapsed;
         }
 
         #endregion

@@ -53,5 +53,13 @@ namespace simple_mail.ViewModels
                 return "SentMessage";
             }
         }
+
+        public static string Notification
+        {
+            get
+            {
+                return "Notification";
+            }
+        }
     }
 }

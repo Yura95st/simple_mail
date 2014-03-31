@@ -27,14 +27,53 @@
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type vm:ReadMessageViewModel}">
-            <v:ReadMessage />
-        </DataTemplate>        
+            <v:ReadMessageView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:ComposeMessageViewModel}">
+            <v:ComposeMessageView />
+        </DataTemplate>
 
     </Window.Resources>
 
-    <Grid>        
-        
-        <ContentControl Content="{Binding CurrentPageViewModel}" />
-        
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="{Binding NotificationBox.Text}" HorizontalAlignment="Stretch"
+               HorizontalContentAlignment="Center" FontWeight="Bold">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding NotificationBox.State}" Value="0">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                        
+                        <DataTrigger Binding="{Binding NotificationBox.State}" Value="1">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding NotificationBox.State}" Value="2">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding NotificationBox.Type}" Value="0">
+                            <Setter Property="Background" Value="#F9EDBE" />
+                            <Setter Property="Foreground" Value="#333333" />
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding NotificationBox.Type}" Value="1">
+                            <Setter Property="Background" Value="#fdf7f7" />
+                            <Setter Property="Foreground" Value="#d9534f" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+
+        <ContentControl Grid.Row="1" Content="{Binding CurrentPageViewModel}" />
+
     </Grid>
 </Window>

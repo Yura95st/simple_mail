@@ -11,6 +11,7 @@ namespace simple_mail.ViewModels
     {
         private List<Message> _messagesList = new List<Message>();
         private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
+        private Notification _notification = Notification.Instance;
 
         private ICommand _restoreMsgCommand;
         private ICommand _deleteMsgCommand;
@@ -80,12 +81,19 @@ namespace simple_mail.ViewModels
             }
             catch (ArgumentOutOfRangeException e)
             {
+                _notification.Text = string.Format("An error occured. Please, try again later.{0}", "DEBUG: " + e.Message);
+                _notification.Type = (int)Notification.Types.Error;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
 
             List<Message> newMessagesList = new List<Message>(MessagesList);
             newMessagesList.Remove(msg);
             MessagesList = newMessagesList;
+
+            _notification.Text = "Message was deleted.";
+            _notification.Type = (int)Notification.Types.Info;
+            ApplicationViewModel.ShowNotificationBox(_notification);
         }
 
         private void RestoreMessage(Message msg)
@@ -103,12 +111,19 @@ namespace simple_mail.ViewModels
             }
             catch (ArgumentOutOfRangeException e)
             {
+                _notification.Text = string.Format("An error occured. Please, try again later.{0}", "DEBUG: " + e.Message);
+                _notification.Type = (int)Notification.Types.Error;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
 
             List<Message> newMessagesList = new List<Message>(MessagesList);
             newMessagesList.Remove(msg);
             MessagesList = newMessagesList;
+
+            _notification.Text = "Message was restored.";
+            _notification.Type = (int)Notification.Types.Info;
+            ApplicationViewModel.ShowNotificationBox(_notification);
         }
 
         private bool IsMessageValid(Message msg)
@@ -126,9 +141,19 @@ namespace simple_mail.ViewModels
             try
             {
                 MessagesList = _messageDbHelper.GetTrashMessages(AuthorizationViewModel.LoggedUserId);
+
+                if (MessagesList == null || MessagesList.Count == 0)
+                {
+                    _notification.Text = "Trash is empty.";
+                    _notification.Type = (int)Notification.Types.Info;
+                    ApplicationViewModel.ShowNotificationBox(_notification);
+                }
             }
             catch (ArgumentOutOfRangeException e)
             {
+                _notification.Text = string.Format("An error occured. Please, try again later.{0}", "DEBUG: " + e.Message);
+                _notification.Type = (int)Notification.Types.Error;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
         }

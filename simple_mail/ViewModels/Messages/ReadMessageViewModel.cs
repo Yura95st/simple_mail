@@ -12,6 +12,7 @@ namespace simple_mail.ViewModels
     {
         private Message _messageModel = new Message();
         private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
+        private Notification _notification = Notification.Instance;
         private string _replyMessageText;
 
         private ICommand _replyMessageCommand;
@@ -102,23 +103,38 @@ namespace simple_mail.ViewModels
             }
             catch(EmtpyMessageSubjectException e)
             {
-                return; 
+                _notification.Text = "Subject field is empty!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
+                return;
             }
             catch(EmptyMessageTextException e)
             {
-                return; 
+                _notification.Text = "Text field is empty!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
+                return;
             }
             catch(InvalidMessageAuthorException e)
             {
-                return; 
+                _notification.Text = string.Format("An error occured. Please, try again later.{0}", "DEBUG: " + e.Message);
+                _notification.Type = (int)Notification.Types.Error;
+                ApplicationViewModel.ShowNotificationBox(_notification);
+                return;
             }
             catch(InvalidMessageRecipientException e)
             {
-                return; 
-
+                _notification.Text = string.Format("An error occured. Please, try again later.{0}", "DEBUG: " + e.Message);
+                _notification.Type = (int)Notification.Types.Error;
+                ApplicationViewModel.ShowNotificationBox(_notification);
+                return;
             }
 
             ViewModelCommunication.Messaging.NotifyColleagues(ViewModelCommunication.SentMessage);
+
+            _notification.Text = "Reply message was sent!";
+            _notification.Type = (int)Notification.Types.Info;
+            ApplicationViewModel.ShowNotificationBox(_notification);
         }
 
         public void OnShow()
@@ -136,6 +152,8 @@ namespace simple_mail.ViewModels
             }
             catch (ArgumentOutOfRangeException e)
             {
+                _notification.Text = string.Format("An error occured. Please, try again later.{0}", "DEBUG: " + e.Message);
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
         }

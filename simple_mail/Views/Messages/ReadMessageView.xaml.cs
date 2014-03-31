@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace simple_mail.Views
 {
     /// <summary>
-    /// Interaction logic for ReadMessage.xaml
+    /// Interaction logic for ReadMessageView.xaml
     /// </summary>
-    public partial class ReadMessage : UserControl
+    public partial class ReadMessageView : UserControl
     {
-        public ReadMessage()
+        public ReadMessageView()
         {
             InitializeComponent();
         }

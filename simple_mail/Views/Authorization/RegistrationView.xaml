@@ -17,7 +17,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Content="Username:" Margin="-5,0,0,0" />
@@ -38,8 +37,6 @@
                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                     CommandParameter="{Binding DataContext.AuthorizationViewModel, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></Button>
         </StackPanel>
-
-        <Label Grid.Row="9" Content="{Binding Path=SignUpInfoMsg, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="-5,5,0,0" />
 
     </Grid>
 </UserControl>

@@ -12,10 +12,10 @@ namespace simple_mail.ViewModels
     {
         private User _userModel = new User();
         private UserDbHelper _userDbHelper = UserDbHelper.Instance;
+        private Notification _notification = Notification.Instance;
 
         private ICommand _signUpCommand;
         private string _confirmPassword = "";
-        private string _signUpInfoMsg = "";
 
         public RegistrationViewModel()
         {
@@ -56,22 +56,6 @@ namespace simple_mail.ViewModels
             }
         }
 
-        public string SignUpInfoMsg
-        {
-            get
-            {
-                return _signUpInfoMsg;
-            }
-            set
-            {
-                if (value != _signUpInfoMsg)
-                {
-                    _signUpInfoMsg = value;
-                    OnPropertyChanged("SignUpInfoMsg");
-                }
-            }
-        }
-
         public ICommand SignUpCommand
         {
             get
@@ -92,15 +76,16 @@ namespace simple_mail.ViewModels
             UserModel.FirstName = "";
             UserModel.Email = "";
             UserModel.Password = "";
+            ConfirmPassword = "";
         }
 
         private void CreateNewUserAccount()
         {
-            SignUpInfoMsg = "";
-
             if (!MyValidation.AreTwoPasswordsEqual(UserModel.Password, ConfirmPassword))
             {
-                SignUpInfoMsg = "INFO: Passwords are not equal!";
+                _notification.Text = "Passwords are not equal!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
 
@@ -110,22 +95,30 @@ namespace simple_mail.ViewModels
             }
             catch (InvalidEmailException e)
             {
-                SignUpInfoMsg = "INFO: Email is invalid!";
+                _notification.Text = "Email is invalid!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
             catch (InvalidFirstNameException e)
             {
-                SignUpInfoMsg = "INFO: Username is invalid!";
+                _notification.Text = "Username is invalid!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
             catch (InvalidPasswordException e)
             {
-                SignUpInfoMsg = "INFO: Password is invalid!";
+                _notification.Text = "Password is invalid!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
             catch (UserAlreadyExistsException e)
             {
-                SignUpInfoMsg = "INFO: UserAccount with such email already exists!";
+                _notification.Text = "UserAccount with such email already exists!";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
 
@@ -137,7 +130,9 @@ namespace simple_mail.ViewModels
             }
             catch (Exception e)
             {
-                SignUpInfoMsg = "INFO: An error occured while logging You in!";
+                _notification.Text = "An error occured while logging You in!";
+                _notification.Type = (int)Notification.Types.Error;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
 

@@ -10,8 +10,8 @@ namespace data_models.Models
         private string _subject;
         private string _text;
         private DateTime _pubDate;
-        private User _author;
-        private User _recipient;
+        private User _author = new User();
+        private User _recipient = new User();
         private int _state;
         private int _recipientMsgState;
 

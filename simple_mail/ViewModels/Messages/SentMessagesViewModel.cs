@@ -11,6 +11,7 @@ namespace simple_mail.ViewModels
     {
         private List<Message> _messagesList = new List<Message>();
         private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
+        private Notification _notification = Notification.Instance;
 
         private ICommand _moveMsgToTrashCommand;
 
@@ -54,9 +55,16 @@ namespace simple_mail.ViewModels
             try
             {
                 _messageDbHelper.MoveToTrashAuthorMessage(msg.Id);
+
+                _notification.Text = "Message was moved to trash";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
             }
             catch (ArgumentOutOfRangeException e)
             {
+                _notification.Text = string.Format("An error occured. Please, try again later.{0}", "DEBUG: " + e.Message);
+                _notification.Type = (int)Notification.Types.Error;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
 
@@ -80,9 +88,19 @@ namespace simple_mail.ViewModels
             try
             {
                 MessagesList = _messageDbHelper.GetSentMessages(AuthorizationViewModel.LoggedUserId);
+
+                if (MessagesList == null || MessagesList.Count == 0)
+                {
+                    _notification.Text = "Sent is empty.";
+                    _notification.Type = (int)Notification.Types.Info;
+                    ApplicationViewModel.ShowNotificationBox(_notification);
+                }
             }
             catch (ArgumentOutOfRangeException e)
             {
+                _notification.Text = string.Format("An error occured. Please, try again later.{0}", "DEBUG: " + e.Message);
+                _notification.Type = (int)Notification.Types.Error;
+                ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
             }
         }
