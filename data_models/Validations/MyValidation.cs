@@ -41,7 +41,11 @@ namespace data_models.Validations
 
         public static bool IsValidFirstName(string firstName)
         {
-            return true;
+            string pattern = @"^[A-z][A-z|\.|_|-]+$";
+
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            return regex.IsMatch(firstName.ToLower());
         }
 
         public static void CheckValidUserFields(User user)
@@ -58,13 +62,17 @@ namespace data_models.Validations
 
             if (!IsValidPassword(user.Password))
             {
-                throw new InvalidPasswordException(user.FirstName);
+                throw new InvalidPasswordException(user.Password);
             }
         }
 
         public static bool IsValidPassword(string password)
         {
-            return true;
+            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,30}$";
+
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(password);
         }
 
         public static bool AreTwoPasswordsEqual(string pass1, string pass2)
@@ -74,12 +82,12 @@ namespace data_models.Validations
 
         public static void CheckValidMessageFields(Message message)
         {
-            if (string.Equals(message.Subject.Trim(), ""))
+            if (string.IsNullOrEmpty(message.Subject.Trim()))
             {
                 throw new EmtpyMessageSubjectException();
             }
 
-            if (string.Equals(message.Text.Trim(), ""))
+            if (string.IsNullOrEmpty(message.Text.Trim()))
             {
                 throw new EmptyMessageTextException();
             }

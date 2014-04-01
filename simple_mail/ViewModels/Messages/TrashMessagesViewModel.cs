@@ -11,7 +11,6 @@ namespace simple_mail.ViewModels
     {
         private List<Message> _messagesList = new List<Message>();
         private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
-        private Notification _notification = Notification.Instance;
 
         private ICommand _restoreMsgCommand;
         private ICommand _deleteMsgCommand;
@@ -141,13 +140,6 @@ namespace simple_mail.ViewModels
             try
             {
                 MessagesList = _messageDbHelper.GetTrashMessages(AuthorizationViewModel.LoggedUserId);
-
-                if (MessagesList == null || MessagesList.Count == 0)
-                {
-                    _notification.Text = "Trash is empty.";
-                    _notification.Type = (int)Notification.Types.Info;
-                    ApplicationViewModel.ShowNotificationBox(_notification);
-                }
             }
             catch (ArgumentOutOfRangeException e)
             {
@@ -155,6 +147,13 @@ namespace simple_mail.ViewModels
                 _notification.Type = (int)Notification.Types.Error;
                 ApplicationViewModel.ShowNotificationBox(_notification);
                 return;
+            }
+
+            if (MessagesList == null || MessagesList.Count == 0)
+            {
+                _notification.Text = "Trash is empty.";
+                _notification.Type = (int)Notification.Types.Info;
+                ApplicationViewModel.ShowNotificationBox(_notification);
             }
         }
     }

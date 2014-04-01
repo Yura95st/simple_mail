@@ -13,22 +13,7 @@ namespace database_lib.DbHelpers
 {
     public class MessageDbHelper : BaseDbHelper
     {
-        private static MessageDbHelper _instance;        
-
-        public enum AuthorMessageState
-        {
-            InitState = 0,
-            MovedToTrash = 1,
-            Deleted = 2
-        };
-
-        public enum RecipientMessageState
-        {
-            Read = 0,
-            MovedToTrash = 1,
-            Deleted = 2,
-            Unread = 3
-        };
+        private static MessageDbHelper _instance;
 
         private enum MessageType
         {
@@ -180,7 +165,7 @@ namespace database_lib.DbHelpers
             cmd.Parameters.Add(new SqlParameter
             {
                 ParameterName = "@state",
-                Value = (int)AuthorMessageState.InitState,
+                Value = (int)Message.AuthorMessageState.InitState,
                 SqlDbType = SqlDbType.Int
             });
 
@@ -247,7 +232,7 @@ namespace database_lib.DbHelpers
             cmd.Parameters.Add(new SqlParameter
             {
                 ParameterName = "@state",
-                Value = (int)RecipientMessageState.Unread,
+                Value = (int)Message.RecipientMessageState.Unread,
                 SqlDbType = SqlDbType.Int
             });
 
@@ -293,9 +278,9 @@ namespace database_lib.DbHelpers
                          */
                         cmd.CommandText += String.Format(@" 
                             WHERE {0} = @user_id AND ({1} = {2} OR {3} = {4})", 
-                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID, 
-                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE, (int)RecipientMessageState.Read, 
-                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE, (int)RecipientMessageState.Unread
+                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID,
+                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE, (int)Message.RecipientMessageState.Read,
+                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE, (int)Message.RecipientMessageState.Unread
                         );
                         break;
                     }
@@ -305,8 +290,8 @@ namespace database_lib.DbHelpers
                         /* WHERE author_id = @user_id AND messages_state = 0 */
                         cmd.CommandText += String.Format(@" 
                             WHERE {0} = @user_id AND {1} = {2}",
-                            DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_ID, 
-                            DbValues.MESSAGES_VIEW_COLUMN_STATE, (int)AuthorMessageState.InitState
+                            DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_ID,
+                            DbValues.MESSAGES_VIEW_COLUMN_STATE, (int)Message.AuthorMessageState.InitState
                         );
                         break;
                     }
@@ -320,8 +305,8 @@ namespace database_lib.DbHelpers
                             WHERE ({0} = @user_id AND {1} = {2}) 
                                 OR ({3} = @user_id AND {4} = {5})",
                             DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_ID, DbValues.MESSAGES_VIEW_COLUMN_STATE,
-                            (int)AuthorMessageState.MovedToTrash, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID,
-                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE, (int)RecipientMessageState.MovedToTrash
+                            (int)Message.AuthorMessageState.MovedToTrash, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID,
+                            DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_MSG_STATE, (int)Message.RecipientMessageState.MovedToTrash
                         );
                         break;
                     }
@@ -343,49 +328,49 @@ namespace database_lib.DbHelpers
         // restores message, added by author
         public void RestoreAuthorMessage(int msgId)
         {
-            SetAuthorMessageState(msgId, (int)AuthorMessageState.InitState);
+            SetAuthorMessageState(msgId, (int)Message.AuthorMessageState.InitState);
         }
 
         // restores message, recieved by recipient
         public void RestoreRecipientMessage(int msgId, int recipientId)
         {
-            SetRecipientMessageState(msgId, recipientId, (int)RecipientMessageState.Read);
+            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.Read);
         }
 
         // marks message as read
         public void ReadMessage(int msgId, int recipientId)
         {
-            SetRecipientMessageState(msgId, recipientId, (int)RecipientMessageState.Read);
+            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.Read);
         }
         
         // marks message as unread
         public void MarkMessageAsUnread(int msgId, int recipientId)
         {
-            SetRecipientMessageState(msgId, recipientId, (int)RecipientMessageState.Unread);
+            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.Unread);
         }
 
         // moves to trash message, added by author
         public void MoveToTrashAuthorMessage(int msgId)
         {
-            SetAuthorMessageState(msgId, (int)AuthorMessageState.MovedToTrash);
+            SetAuthorMessageState(msgId, (int)Message.AuthorMessageState.MovedToTrash);
         }
 
         // moves to trash message, recieved by recipient
         public void MoveToTrashRecipientMessage(int msgId, int recipientId)
         {
-            SetRecipientMessageState(msgId, recipientId, (int)RecipientMessageState.MovedToTrash);
+            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.MovedToTrash);
         }
 
         // deletes message, added by author
         public void DeleteAuthorMessage(int msgId)
         {
-            SetAuthorMessageState(msgId, (int)AuthorMessageState.Deleted);
+            SetAuthorMessageState(msgId, (int)Message.AuthorMessageState.Deleted);
         }
 
         // deletes message, recieved by recipient
         public void DeleteRecipientMessage(int msgId, int recipientId)
         {
-            SetRecipientMessageState(msgId, recipientId, (int)RecipientMessageState.Deleted);
+            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.Deleted);
         }
 
         // returns message object from the query result - dataReader
@@ -521,6 +506,7 @@ namespace database_lib.DbHelpers
                 connection.Close();
             }
 
+            //orders message list by PubDate
             return messages.OrderByDescending(m => m.PubDate).ToList();
         }
 

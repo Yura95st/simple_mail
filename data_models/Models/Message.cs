@@ -15,6 +15,21 @@ namespace data_models.Models
         private int _state;
         private int _recipientMsgState;
 
+        public enum AuthorMessageState
+        {
+            InitState = 0,
+            MovedToTrash = 1,
+            Deleted = 2
+        };
+
+        public enum RecipientMessageState
+        {
+            Read = 0,
+            MovedToTrash = 1,
+            Deleted = 2,
+            Unread = 3
+        };
+
         public Message()
         {
             _id = 0;
@@ -23,8 +38,8 @@ namespace data_models.Models
             _pubDate = new DateTime();
             _author = new User();
             _recipient = new User();
-            _state = -1;
-            _recipientMsgState = -1; 
+            _state = (int)AuthorMessageState.InitState;
+            _recipientMsgState = (int)RecipientMessageState.Unread;
         }
 
         public int Id

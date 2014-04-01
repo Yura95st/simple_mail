@@ -11,7 +11,6 @@ namespace simple_mail.ViewModels
     {
         private User _userModel = new User();
         private UserDbHelper _userDbHelper = UserDbHelper.Instance;
-        private Notification _notification = Notification.Instance;
 
         private ICommand _signInCommand;
         private ICommand _logOutCommand;

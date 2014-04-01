@@ -27,7 +27,7 @@ namespace database_lib.DbHelpers
             try
             {
                 connection.Open();
-                //bing opened connection to the command
+                //bind opened connection to the command
                 command.Connection = connection;
 
                 affectedRows = command.ExecuteNonQuery();
@@ -49,7 +49,7 @@ namespace database_lib.DbHelpers
             try
             {
                 connection.Open();
-                //bing opened connection to the command
+                //bind opened connection to the command
                 command.Connection = connection;
 
                 result = command.ExecuteScalar();

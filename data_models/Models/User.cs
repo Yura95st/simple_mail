@@ -10,6 +10,12 @@ namespace data_models.Models
         private string _password;
         private int _state;
 
+        public enum States
+        {
+            Offline = 0,
+            Online = 1
+        };
+
         public User()
         {
             _id = 0;

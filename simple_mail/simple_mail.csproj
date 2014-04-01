@@ -67,7 +67,7 @@
     <Compile Include="ViewModels\Messages\ReadMessageViewModel.cs" />
     <Compile Include="ViewModels\Messages\TrashMessagesViewModel.cs" />
     <Compile Include="ViewModels\Messages\SentMessagesViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelCommunication.cs" />
+    <Compile Include="HelperClasses\ViewModelCommunication.cs" />
     <Compile Include="Views\ApplicationView.xaml.cs">
       <DependentUpon>ApplicationView.xaml</DependentUpon>
     </Compile>

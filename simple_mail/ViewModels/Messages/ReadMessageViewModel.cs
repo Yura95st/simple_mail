@@ -12,7 +12,6 @@ namespace simple_mail.ViewModels
     {
         private Message _messageModel = new Message();
         private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
-        private Notification _notification = Notification.Instance;
         private string _replyMessageText;
 
         private ICommand _replyMessageCommand;
@@ -72,7 +71,7 @@ namespace simple_mail.ViewModels
 
         private bool IsReplyTextNotEmpty()
         {
-            return !string.Equals(ReplyMessageText, "");
+            return !string.IsNullOrEmpty(ReplyMessageText);
         }
 
         private void ReplyMessage()
@@ -139,12 +138,17 @@ namespace simple_mail.ViewModels
 
         public void OnShow()
         {
+            OpenMessage();
+        }
+
+        private void OpenMessage()
+        {
             try
             {
                 MessageModel = _messageDbHelper.GetMessageById(ReadMessageId);
 
-                if (MessageModel.Recipient.Id == AuthorizationViewModel.LoggedUserId && 
-                    MessageModel.RecipientMsgState == (int)MessageDbHelper.RecipientMessageState.Unread)
+                if (MessageModel.Recipient.Id == AuthorizationViewModel.LoggedUserId &&
+                    MessageModel.RecipientMsgState == (int)Message.RecipientMessageState.Unread)
                 {
                     // Set message's state to "Read"
                     _messageDbHelper.ReadMessage(ReadMessageId, AuthorizationViewModel.LoggedUserId);

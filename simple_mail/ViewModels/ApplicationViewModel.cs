@@ -11,47 +11,20 @@ namespace simple_mail.ViewModels
     {
         #region Fields
 
-        private ICommand _changePageCommand;
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
 
-        private Notification _notificationBox = Notification.Instance;
+        private ICommand _changePageCommand;
 
         #endregion
 
         public ApplicationViewModel()
         {
-            // register to messages from pageViewModels
-            RegisterToLogInUserMessage();
-            RegisterToLogOutUserMessage();
-            RegisterToReadMessageMessage();
-            RegisterToSentMessageMessage();
-
-            // notifications about error/info from ViewModels will be shown in the NotificationBox
-            RegisterToNotificationMessage();
-
             // list of available pages
-            AuthorizationViewModel = new AuthorizationViewModel();
-            RegistrationViewModel = new RegistrationViewModel();
+            InitAvailablePages();
 
-            InboxMessagesViewModel = new InboxMessagesViewModel();
-            SentMessagesViewModel = new SentMessagesViewModel();
-            TrashMessagesViewModel = new TrashMessagesViewModel();
-
-            ReadMessageViewModel = new ReadMessageViewModel();
-            ComposeMessageViewModel = new ComposeMessageViewModel();
-            
-
-            // Add available pages
-            PageViewModels.Add(this.AuthorizationViewModel);
-            PageViewModels.Add(this.RegistrationViewModel);
-
-            PageViewModels.Add(this.InboxMessagesViewModel);
-            PageViewModels.Add(this.SentMessagesViewModel);
-            PageViewModels.Add(this.TrashMessagesViewModel);
-
-            PageViewModels.Add(this.ReadMessageViewModel);
-            PageViewModels.Add(this.ComposeMessageViewModel);
+            // register to messages from pageViewModels
+            RegisterToMessagesFromPageViewModels();
 
             // Set starting page
             this.ChangeViewModel(AuthorizationViewModel);
@@ -61,44 +34,58 @@ namespace simple_mail.ViewModels
 
         public IPageViewModel AuthorizationViewModel
         {
-            get;
-            set;
+            get
+            {
+                return _pageViewModels.Find(p => (p is AuthorizationViewModel));
+            }
         }
 
         public IPageViewModel RegistrationViewModel
         {
-            get;
-            set;
+            get
+            {
+                return _pageViewModels.Find(p => (p is RegistrationViewModel));
+            }
         }
 
         public IPageViewModel InboxMessagesViewModel
         {
-            get;
-            set;
+            get
+            {
+                return _pageViewModels.Find(p => (p is InboxMessagesViewModel));
+            }
         }
 
         public IPageViewModel SentMessagesViewModel
         {
-            get;
-            set;
+            get
+            {
+                return _pageViewModels.Find(p => (p is SentMessagesViewModel));
+            }
         }
 
         public IPageViewModel TrashMessagesViewModel
         {
-            get;
-            set;
+            get
+            {
+                return _pageViewModels.Find(p => (p is TrashMessagesViewModel));
+            }
         }
 
         public IPageViewModel ReadMessageViewModel
         {
-            get;
-            set;
+            get
+            {
+                return _pageViewModels.Find(p => (p is ReadMessageViewModel));
+            }
         }
 
         public IPageViewModel ComposeMessageViewModel
         {
-            get;
-            set;
+            get
+            {
+                return _pageViewModels.Find(p => (p is ComposeMessageViewModel));
+            }
         }
 
         public ICommand ChangePageCommand
@@ -113,17 +100,6 @@ namespace simple_mail.ViewModels
                 }
 
                 return _changePageCommand;
-            }
-        }
-
-        public List<IPageViewModel> PageViewModels
-        {
-            get
-            {
-                if (_pageViewModels == null)
-                    _pageViewModels = new List<IPageViewModel>();
-
-                return _pageViewModels;
             }
         }
 
@@ -147,13 +123,13 @@ namespace simple_mail.ViewModels
         {
             get 
             {
-                return _notificationBox;
+                return _notification;
             }
             set 
             {
-                if (_notificationBox != value)
+                if (_notification != value)
                 {
-                    _notificationBox = value;
+                    _notification = value;
                     OnPropertyChanged("NotificationBox");
                 }
             }
@@ -165,15 +141,43 @@ namespace simple_mail.ViewModels
 
         private void ChangeViewModel(IPageViewModel viewModel)
         {
-            if (!PageViewModels.Contains(viewModel))
-                PageViewModels.Add(viewModel);
+            if (!_pageViewModels.Contains(viewModel))
+            {
+                _pageViewModels.Add(viewModel);
+            }
 
-            CurrentPageViewModel = PageViewModels
-                .FirstOrDefault(vm => vm == viewModel);
+            CurrentPageViewModel = _pageViewModels.FirstOrDefault(vm => vm == viewModel);
 
             HideNotificationBox();
 
             viewModel.OnShow();
+        }
+
+        private void InitAvailablePages()
+        {
+            _pageViewModels = new List<IPageViewModel>();
+
+            // Add available pages
+            _pageViewModels.Add(new AuthorizationViewModel());
+            _pageViewModels.Add(new RegistrationViewModel());
+            
+            _pageViewModels.Add(new InboxMessagesViewModel());
+            _pageViewModels.Add(new SentMessagesViewModel());
+            _pageViewModels.Add(new TrashMessagesViewModel());
+            
+            _pageViewModels.Add(new ReadMessageViewModel());
+            _pageViewModels.Add(new ComposeMessageViewModel());
+        }
+
+        private void RegisterToMessagesFromPageViewModels()
+        {
+            RegisterToLogInUserMessage();
+            RegisterToLogOutUserMessage();
+            RegisterToReadMessageMessage();
+            RegisterToSentMessageMessage();
+
+            // notifications about error/info from ViewModels will be shown in the NotificationBox
+            RegisterToNotificationMessage();
         }
 
         private void RegisterToLogInUserMessage()

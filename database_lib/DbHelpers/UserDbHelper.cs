@@ -30,6 +30,7 @@ namespace database_lib.DbHelpers
 
         private UserDbHelper() { }
 
+        //singleton
         public static UserDbHelper Instance
         {
             get
@@ -137,7 +138,7 @@ namespace database_lib.DbHelpers
         }   
 
         // gets users by searching parameters
-        public List<User> SearchForUsers(string title, int type = 0, int publisherId = 0, int authorId = 0)
+        public List<User> SearchForUsers()
         {
             throw new NotImplementedException();
         }
@@ -189,7 +190,7 @@ namespace database_lib.DbHelpers
             cmd.Parameters.Add(new SqlParameter
             {
                 ParameterName = "@password",
-                Value = MyValidation.Hash(user.Password, user.Email),
+                Value = MyValidation.Hash(user.Password, user.Email.ToLower()),
                 SqlDbType = SqlDbType.VarChar
             });
 
@@ -214,7 +215,7 @@ namespace database_lib.DbHelpers
             return userId;
         }
 
-        // deletes user from the library
+        // deletes user
         public void DeleteUser(int userId)
         {
             throw new NotImplementedException();
@@ -311,12 +312,12 @@ namespace database_lib.DbHelpers
 
         public void SetUserOnline(int userId)
         {
-            SetUserState(userId, 1);
+            SetUserState(userId, (int)User.States.Online);
         }
 
         public void SetUserOffline(int userId)
         {
-            SetUserState(userId, 0);
+            SetUserState(userId, (int)User.States.Offline);
         }
 
         // executes sql command to get users

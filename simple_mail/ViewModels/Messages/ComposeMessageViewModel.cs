@@ -13,7 +13,6 @@ namespace simple_mail.ViewModels
         private Message _messageModel = new Message();
         private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
         private UserDbHelper _userDbHelper = UserDbHelper.Instance;
-        private Notification _notification = Notification.Instance;
 
         private ICommand _sendMessageCommand;
 
@@ -54,8 +53,8 @@ namespace simple_mail.ViewModels
 
         private bool IsMessageValid()
         {
-            if (string.Equals(MessageModel.Subject.Trim(), "") || string.Equals(MessageModel.Text.Trim(), "")
-                || MessageModel.Author.Id <= 0 || string.Equals(MessageModel.Recipient.Email.Trim(), ""))
+            if (string.IsNullOrEmpty(MessageModel.Subject.Trim()) || string.IsNullOrEmpty(MessageModel.Text.Trim())
+                || MessageModel.Author.Id <= 0 || string.IsNullOrEmpty(MessageModel.Recipient.Email.Trim()))
             {
                 return false;
             }

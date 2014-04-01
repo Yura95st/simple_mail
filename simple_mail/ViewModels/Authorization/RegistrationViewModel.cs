@@ -12,7 +12,6 @@ namespace simple_mail.ViewModels
     {
         private User _userModel = new User();
         private UserDbHelper _userDbHelper = UserDbHelper.Instance;
-        private Notification _notification = Notification.Instance;
 
         private ICommand _signUpCommand;
         private string _confirmPassword = "";
@@ -109,7 +108,7 @@ namespace simple_mail.ViewModels
             }
             catch (InvalidPasswordException e)
             {
-                _notification.Text = "Password is invalid!";
+                _notification.Text = "Password must: be between 6 and 30 characters long, contain at least one number, uppercase letter, lowercase letter, special character.";
                 _notification.Type = (int)Notification.Types.Info;
                 ApplicationViewModel.ShowNotificationBox(_notification);
                 return;

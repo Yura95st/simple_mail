@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace simple_mail.ViewModels
+namespace simple_mail.HelperClasses
 {
     public static class ViewModelCommunication
     {

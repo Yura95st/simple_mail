@@ -11,7 +11,6 @@ namespace simple_mail.ViewModels
     {
         private List<Message> _messagesList = new List<Message>();
         private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
-        private Notification _notification = Notification.Instance;
 
         private ICommand _markMsgAsUnreadCommand;
         private ICommand _moveMsgToTrashCommand;
@@ -90,7 +89,7 @@ namespace simple_mail.ViewModels
 
         private bool IsMessageRead(Message msg)
         {
-            return msg.RecipientMsgState == (int)MessageDbHelper.RecipientMessageState.Read;
+            return msg.RecipientMsgState == (int)Message.RecipientMessageState.Read;
         }
 
         private void MarkMessageAsUnread(Message msg)
@@ -107,7 +106,7 @@ namespace simple_mail.ViewModels
                 return;
             }
 
-            msg.RecipientMsgState = (int)MessageDbHelper.RecipientMessageState.Unread;
+            msg.RecipientMsgState = (int)Message.RecipientMessageState.Unread;
 
             _notification.Text = "Message was marked as unread.";
             _notification.Type = (int)Notification.Types.Info;

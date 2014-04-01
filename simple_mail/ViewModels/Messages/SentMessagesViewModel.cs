@@ -11,7 +11,6 @@ namespace simple_mail.ViewModels
     {
         private List<Message> _messagesList = new List<Message>();
         private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
-        private Notification _notification = Notification.Instance;
 
         private ICommand _moveMsgToTrashCommand;
 
@@ -55,10 +54,6 @@ namespace simple_mail.ViewModels
             try
             {
                 _messageDbHelper.MoveToTrashAuthorMessage(msg.Id);
-
-                _notification.Text = "Message was moved to trash";
-                _notification.Type = (int)Notification.Types.Info;
-                ApplicationViewModel.ShowNotificationBox(_notification);
             }
             catch (ArgumentOutOfRangeException e)
             {
@@ -71,6 +66,10 @@ namespace simple_mail.ViewModels
             List<Message> newMessagesList = new List<Message>(MessagesList);
             newMessagesList.Remove(msg);
             MessagesList = newMessagesList;
+
+            _notification.Text = "Message was moved to trash";
+            _notification.Type = (int)Notification.Types.Info;
+            ApplicationViewModel.ShowNotificationBox(_notification);
         }
 
         private bool IsMessageValid(Message msg)
