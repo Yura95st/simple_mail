@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO 12.0/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/ReverseEngineeringLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="Code Generation/Text Transformation Log">
+  <MessageClass Name="Message" Label="Message" Option="Show informational messages" />
+  <MessageClass Name="Warning" Label="Warning" Option="Show warnings" />
+  <MessageClass Name="Error" Label="Error" Option="Show errors" />
+  <MessageClass Name="Property" Label="Property" Option="Show metadata" />
+  <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
+  <Message Timestamp="2014-04-01T07:22:33" Importance="High" Text="Reverse Engineering Started." />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Integer' -  (PrimitiveType)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models' -  (Package)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::HelperClasses' -  (Package)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::HelperClasses::ObservableObject' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models' -  (Package)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Medium" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message' -  (Class)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_author' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_id' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_pubDate' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_recipient' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_recipientMsgState' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_state' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_subject' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_text' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Author' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Id' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Message' -  (Operation)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::PubDate' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Recipient' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::RecipientMsgState' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::State' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Subject' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Text' -  (Property)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::User' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System' -  (Package)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System::DateTime' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Message to modeling::System::DateTime (Association)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Message to modeling::data_models::Models::User (Association)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Message to modeling::data_models::Models::User (Association)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Message to modeling::data_models::HelperClasses::ObservableObject (Generalization)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::User to modeling::data_models::HelperClasses::ObservableObject (Generalization)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Notification to modeling::data_models::HelperClasses::ObservableObject (Generalization)" />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="High" Text="(1) type(s) fully reverse engineered." />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="High" Text="(3) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
+  <Message Timestamp="2014-04-01T07:22:34" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
+</Log>
