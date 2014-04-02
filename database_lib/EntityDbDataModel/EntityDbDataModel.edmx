@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EntityDbDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="message_users">
+          <Key>
+            <PropertyRef Name="msg_id" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="msg_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="messages">
+          <Key>
+            <PropertyRef Name="msg_id" />
+          </Key>
+          <Property Name="msg_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="author_id" Type="int" Nullable="false" />
+          <Property Name="subject" Type="varchar" MaxLength="1000" />
+          <Property Name="text" Type="text" Nullable="false" />
+          <Property Name="pub_date" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'simple_mail.dbo.messages_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="messages_view">
+          <Key>
+            <PropertyRef Name="messages_msg_id" />
+            <PropertyRef Name="messages_text" />
+            <PropertyRef Name="messages_pub_date" />
+            <PropertyRef Name="messages_state" />
+            <PropertyRef Name="author_id" />
+            <PropertyRef Name="author_first_name" />
+            <PropertyRef Name="author_email" />
+            <PropertyRef Name="author_state" />
+            <PropertyRef Name="recipient_user_id" />
+            <PropertyRef Name="recipient_first_name" />
+            <PropertyRef Name="recipient_email" />
+            <PropertyRef Name="recipient_state" />
+            <PropertyRef Name="messages_recipient_msg_state" />
+          </Key>
+          <Property Name="messages_msg_id" Type="int" Nullable="false" />
+          <Property Name="messages_subject" Type="varchar" MaxLength="1000" />
+          <Property Name="messages_text" Type="text" Nullable="false" />
+          <Property Name="messages_pub_date" Type="datetime" Nullable="false" />
+          <Property Name="messages_state" Type="int" Nullable="false" />
+          <Property Name="author_id" Type="int" Nullable="false" />
+          <Property Name="author_first_name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="author_email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="author_state" Type="int" Nullable="false" />
+          <Property Name="recipient_user_id" Type="int" Nullable="false" />
+          <Property Name="recipient_first_name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="recipient_email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="recipient_state" Type="int" Nullable="false" />
+          <Property Name="messages_recipient_msg_state" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_message_users_messages">
+          <End Role="messages" Type="Self.messages" Multiplicity="1" />
+          <End Role="message_users" Type="Self.message_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="messages">
+              <PropertyRef Name="msg_id" />
+            </Principal>
+            <Dependent Role="message_users">
+              <PropertyRef Name="msg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_message_users_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="message_users" Type="Self.message_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="message_users">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EntityDbDataModelStoreContainer">
+          <EntitySet Name="message_users" EntityType="Self.message_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="messages" EntityType="Self.messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="messages_view" EntityType="Self.messages_view" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [messages_view].[messages_msg_id] AS [messages_msg_id], 
+    [messages_view].[messages_subject] AS [messages_subject], 
+    [messages_view].[messages_text] AS [messages_text], 
+    [messages_view].[messages_pub_date] AS [messages_pub_date], 
+    [messages_view].[messages_state] AS [messages_state], 
+    [messages_view].[author_id] AS [author_id], 
+    [messages_view].[author_first_name] AS [author_first_name], 
+    [messages_view].[author_email] AS [author_email], 
+    [messages_view].[author_state] AS [author_state], 
+    [messages_view].[recipient_user_id] AS [recipient_user_id], 
+    [messages_view].[recipient_first_name] AS [recipient_first_name], 
+    [messages_view].[recipient_email] AS [recipient_email], 
+    [messages_view].[recipient_state] AS [recipient_state], 
+    [messages_view].[messages_recipient_msg_state] AS [messages_recipient_msg_state]
+    FROM [dbo].[messages_view] AS [messages_view]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_message_users_messages" Association="Self.FK_message_users_messages">
+            <End Role="messages" EntitySet="messages" />
+            <End Role="message_users" EntitySet="message_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_message_users_users" Association="Self.FK_message_users_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="message_users" EntitySet="message_users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EntityDbDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="message_users">
+          <Key>
+            <PropertyRef Name="msg_id" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="msg_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="message" Relationship="Self.FK_message_users_messages" FromRole="message_users" ToRole="messages" />
+          <NavigationProperty Name="user" Relationship="Self.FK_message_users_users" FromRole="message_users" ToRole="users" />
+        </EntityType>
+        <EntityType Name="message">
+          <Key>
+            <PropertyRef Name="msg_id" />
+          </Key>
+          <Property Name="msg_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="author_id" Type="Int32" Nullable="false" />
+          <Property Name="subject" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pub_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="message_users" Relationship="Self.FK_message_users_messages" FromRole="messages" ToRole="message_users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="message_users" Relationship="Self.FK_message_users_users" FromRole="users" ToRole="message_users" />
+        </EntityType>
+        <EntityType Name="messages_view">
+          <Key>
+            <PropertyRef Name="messages_msg_id" />
+            <PropertyRef Name="messages_text" />
+            <PropertyRef Name="messages_pub_date" />
+            <PropertyRef Name="messages_state" />
+            <PropertyRef Name="author_id" />
+            <PropertyRef Name="author_first_name" />
+            <PropertyRef Name="author_email" />
+            <PropertyRef Name="author_state" />
+            <PropertyRef Name="recipient_user_id" />
+            <PropertyRef Name="recipient_first_name" />
+            <PropertyRef Name="recipient_email" />
+            <PropertyRef Name="recipient_state" />
+            <PropertyRef Name="messages_recipient_msg_state" />
+          </Key>
+          <Property Name="messages_msg_id" Type="Int32" Nullable="false" />
+          <Property Name="messages_subject" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="messages_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="messages_pub_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="messages_state" Type="Int32" Nullable="false" />
+          <Property Name="author_id" Type="Int32" Nullable="false" />
+          <Property Name="author_first_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="author_email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="author_state" Type="Int32" Nullable="false" />
+          <Property Name="recipient_user_id" Type="Int32" Nullable="false" />
+          <Property Name="recipient_first_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="recipient_email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="recipient_state" Type="Int32" Nullable="false" />
+          <Property Name="messages_recipient_msg_state" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_message_users_messages">
+          <End Role="messages" Type="Self.message" Multiplicity="1" />
+          <End Role="message_users" Type="Self.message_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="messages">
+              <PropertyRef Name="msg_id" />
+            </Principal>
+            <Dependent Role="message_users">
+              <PropertyRef Name="msg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_message_users_users">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="message_users" Type="Self.message_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="message_users">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="simple_mailEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="message_users" EntityType="Self.message_users" />
+          <EntitySet Name="messages" EntityType="Self.message" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="messages_view" EntityType="Self.messages_view" />
+          <AssociationSet Name="FK_message_users_messages" Association="Self.FK_message_users_messages">
+            <End Role="messages" EntitySet="messages" />
+            <End Role="message_users" EntitySet="message_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_message_users_users" Association="Self.FK_message_users_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="message_users" EntitySet="message_users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EntityDbDataModelStoreContainer" CdmEntityContainer="simple_mailEntities">
+          <EntitySetMapping Name="message_users">
+            <EntityTypeMapping TypeName="EntityDbDataModel.message_users">
+              <MappingFragment StoreEntitySet="message_users">
+                <ScalarProperty Name="msg_id" ColumnName="msg_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="messages">
+            <EntityTypeMapping TypeName="EntityDbDataModel.message">
+              <MappingFragment StoreEntitySet="messages">
+                <ScalarProperty Name="msg_id" ColumnName="msg_id" />
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="pub_date" ColumnName="pub_date" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="EntityDbDataModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="messages_view">
+            <EntityTypeMapping TypeName="EntityDbDataModel.messages_view">
+              <MappingFragment StoreEntitySet="messages_view">
+                <ScalarProperty Name="messages_msg_id" ColumnName="messages_msg_id" />
+                <ScalarProperty Name="messages_subject" ColumnName="messages_subject" />
+                <ScalarProperty Name="messages_text" ColumnName="messages_text" />
+                <ScalarProperty Name="messages_pub_date" ColumnName="messages_pub_date" />
+                <ScalarProperty Name="messages_state" ColumnName="messages_state" />
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+                <ScalarProperty Name="author_first_name" ColumnName="author_first_name" />
+                <ScalarProperty Name="author_email" ColumnName="author_email" />
+                <ScalarProperty Name="author_state" ColumnName="author_state" />
+                <ScalarProperty Name="recipient_user_id" ColumnName="recipient_user_id" />
+                <ScalarProperty Name="recipient_first_name" ColumnName="recipient_first_name" />
+                <ScalarProperty Name="recipient_email" ColumnName="recipient_email" />
+                <ScalarProperty Name="recipient_state" ColumnName="recipient_state" />
+                <ScalarProperty Name="messages_recipient_msg_state" ColumnName="messages_recipient_msg_state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

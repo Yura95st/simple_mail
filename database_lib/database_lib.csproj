@@ -30,9 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,9 +50,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbHelpers\BaseDbHelper.cs" />
-    <Compile Include="DbHelpers\MessageDbHelper.cs" />
-    <Compile Include="DbHelpers\UserDbHelper.cs" />
+    <Compile Include="DbHelpers\DbHelpersFactory.cs" />
+    <Compile Include="DbHelpers\MessageDbHelper\IMessageDbHelper.cs" />
+    <Compile Include="DbHelpers\MessageDbHelper\MessageDbHelper.cs" />
+    <Compile Include="DbHelpers\UserDbHelper\IUserDbHelper.cs" />
+    <Compile Include="DbHelpers\MessageDbHelper\MessageDbHelper_EF.cs" />
+    <Compile Include="DbHelpers\UserDbHelper\UserDbHelper.cs" />
+    <Compile Include="DbHelpers\UserDbHelper\UserDbHelper_EF.cs" />
     <Compile Include="DbValues.cs" />
+    <Compile Include="EntityDbDataModel\EntityDbDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityDbDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityDbDataModel\EntityDbDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityDbDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityDbDataModel\EntityDbDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityDbDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EntityDbDataModel\message.cs">
+      <DependentUpon>EntityDbDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityDbDataModel\messages_view.cs">
+      <DependentUpon>EntityDbDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityDbDataModel\message_users.cs">
+      <DependentUpon>EntityDbDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityDbDataModel\user.cs">
+      <DependentUpon>EntityDbDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalValues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\DbValidation.cs" />
   </ItemGroup>
@@ -52,6 +94,31 @@
       <Project>{f16f4840-844f-45db-b56e-c9fc667e9b48}</Project>
       <Name>data_models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="EntityDbDataModel\EntityDbDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EntityDbDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityDbDataModel\EntityDbDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EntityDbDataModel.edmx</DependentUpon>
+      <LastGenOutput>EntityDbDataModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="EntityDbDataModel\EntityDbDataModel.edmx.diagram">
+      <DependentUpon>EntityDbDataModel.edmx</DependentUpon>
+    </None>
+    <None Include="EntityDbDataModel\EntityDbDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EntityDbDataModel.edmx</DependentUpon>
+      <LastGenOutput>EntityDbDataModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
