@@ -48,6 +48,14 @@ namespace simple_mail.ViewModels
             }
         }
 
+        public IPageViewModel SettingsViewModel
+        {
+            get
+            {
+                return _pageViewModels.Find(p => (p is SettingsViewModel));
+            }
+        }
+
         public IPageViewModel InboxMessagesViewModel
         {
             get
@@ -160,6 +168,7 @@ namespace simple_mail.ViewModels
             // Add available pages
             _pageViewModels.Add(new AuthorizationViewModel());
             _pageViewModels.Add(new RegistrationViewModel());
+            _pageViewModels.Add(new SettingsViewModel());
             
             _pageViewModels.Add(new InboxMessagesViewModel());
             _pageViewModels.Add(new SentMessagesViewModel());

@@ -143,7 +143,7 @@ namespace database_lib.DbHelpers
             throw new NotImplementedException();
         }
 
-        // adds new user to the library
+        // adds new user
         // returns id of the newly created user or 0 - if it wasn't created
         public int AddNewUser(User user)
         {
@@ -225,6 +225,42 @@ namespace database_lib.DbHelpers
         public void ModifyUserInfo(User user)
         {
             throw new NotImplementedException();
+        }
+
+        // changes user password
+        public void ChangePassword(User user)
+        {
+            if (!MyValidation.IsValidPassword(user.Password))
+            {
+                throw new InvalidPasswordException();
+            }
+
+            SqlCommand cmd = new SqlCommand();
+
+            // UPDATE users SET password = @password
+            // WHERE user_id = @user_id
+            cmd.CommandText = String.Format(@"
+                UPDATE {0} SET {1} = @password
+                WHERE {2} = @user_id",
+                DbValues.TABLE_USERS,
+                DbValues.USERS_COLUMN_PASSWORD, DbValues.USERS_COLUMN_ID
+            );
+
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@user_id",
+                Value = user.Id,
+                SqlDbType = SqlDbType.VarChar
+            });
+
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@password",
+                Value = MyValidation.Hash(user.Password, user.Email.ToLower()),
+                SqlDbType = SqlDbType.VarChar
+            });
+
+            ExecuteNonQueryCommand(cmd);
         }
 
         public int LogInUser(User user)

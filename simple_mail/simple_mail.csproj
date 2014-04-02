@@ -58,8 +58,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
-    <Compile Include="ViewModels\Authorization\AuthorizationViewModel.cs" />
-    <Compile Include="ViewModels\Authorization\RegistrationViewModel.cs" />
+    <Compile Include="ViewModels\User\AuthorizationViewModel.cs" />
+    <Compile Include="ViewModels\User\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\IPageViewModel.cs" />
     <Compile Include="ViewModels\Messages\ComposeMessageViewModel.cs" />
@@ -68,13 +68,14 @@
     <Compile Include="ViewModels\Messages\TrashMessagesViewModel.cs" />
     <Compile Include="ViewModels\Messages\SentMessagesViewModel.cs" />
     <Compile Include="HelperClasses\ViewModelCommunication.cs" />
+    <Compile Include="ViewModels\User\SettingsViewModel.cs" />
     <Compile Include="Views\ApplicationView.xaml.cs">
       <DependentUpon>ApplicationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Authorization\AuthorizationView.xaml.cs">
+    <Compile Include="Views\User\AuthorizationView.xaml.cs">
       <DependentUpon>AuthorizationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Authorization\RegistrationView.xaml.cs">
+    <Compile Include="Views\User\RegistrationView.xaml.cs">
       <DependentUpon>RegistrationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Messages\ComposeMessageView.xaml.cs">
@@ -94,6 +95,9 @@
     </Compile>
     <Compile Include="Views\Messages\SentMessagesView.xaml.cs">
       <DependentUpon>SentMessagesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -143,11 +147,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Authorization\AuthorizationView.xaml">
+    <Page Include="Views\User\AuthorizationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Authorization\RegistrationView.xaml">
+    <Page Include="Views\User\RegistrationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -174,6 +178,10 @@
     <Page Include="Views\Messages\SentMessagesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\User\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup />

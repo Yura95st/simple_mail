@@ -19,7 +19,7 @@ namespace simple_mail.ViewModels
 
         public AuthorizationViewModel()
         {
-            UserModel.Email = "admin@gmail.com";
+            //UserModel.Email = "admin@gmail.com";
             //UserModel.Password = "admin";
         }
 
@@ -71,7 +71,7 @@ namespace simple_mail.ViewModels
 
         public void OnShow()
         {
-            //UserModel.Email = "";
+            UserModel.Email = "";
             UserModel.Password = "";
         }
 
