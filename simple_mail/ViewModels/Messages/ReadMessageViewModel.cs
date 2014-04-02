@@ -1,6 +1,7 @@
 ﻿using data_models.Exceptions;
 using data_models.Models;
 using data_models.Validations;
+using database_lib;
 using database_lib.DbHelpers;
 using simple_mail.HelperClasses;
 using System;
@@ -11,7 +12,7 @@ namespace simple_mail.ViewModels
     public class ReadMessageViewModel : BaseViewModel, IPageViewModel
     {
         private Message _messageModel = new Message();
-        private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
+        private IMessageDbHelper _messageDbHelper = DbHelpersFactory.GetMessageDbHelper(GlobalValues.HelpersTechnologyType);
         private string _replyMessageText;
 
         private ICommand _replyMessageCommand;

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace database_lib.DbHelpers
 {
-    public class MessageDbHelper : BaseDbHelper
+    public class MessageDbHelper : BaseDbHelper, IMessageDbHelper
     {
         private static MessageDbHelper _instance;
 

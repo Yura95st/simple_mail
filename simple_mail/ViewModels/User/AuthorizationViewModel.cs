@@ -4,13 +4,14 @@ using simple_mail.HelperClasses;
 using System.Windows.Input;
 using System;
 using data_models.Exceptions;
+using database_lib;
 
 namespace simple_mail.ViewModels
 {
     public class AuthorizationViewModel : BaseViewModel, IPageViewModel
     {
         private User _userModel = new User();
-        private UserDbHelper _userDbHelper = UserDbHelper.Instance;
+        private IUserDbHelper _userDbHelper = DbHelpersFactory.GetUserDbHelper(GlobalValues.HelpersTechnologyType);
 
         private ICommand _signInCommand;
         private ICommand _logOutCommand;

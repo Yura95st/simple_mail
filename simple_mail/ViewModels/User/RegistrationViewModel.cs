@@ -1,6 +1,7 @@
 ﻿using data_models.Exceptions;
 using data_models.Models;
 using data_models.Validations;
+using database_lib;
 using database_lib.DbHelpers;
 using simple_mail.HelperClasses;
 using System;
@@ -11,7 +12,7 @@ namespace simple_mail.ViewModels
     public class RegistrationViewModel : BaseViewModel, IPageViewModel
     {
         private User _userModel = new User();
-        private UserDbHelper _userDbHelper = UserDbHelper.Instance;
+        private IUserDbHelper _userDbHelper = DbHelpersFactory.GetUserDbHelper(GlobalValues.HelpersTechnologyType);
 
         private ICommand _signUpCommand;
         private string _confirmPassword = "";

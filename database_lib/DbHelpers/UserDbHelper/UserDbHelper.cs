@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace database_lib.DbHelpers
 {
-    public class UserDbHelper : BaseDbHelper
+    public class UserDbHelper : BaseDbHelper, IUserDbHelper
     {
         private static UserDbHelper _instance;
 

@@ -5,12 +5,13 @@ using System.Windows.Input;
 using System;
 using data_models.Exceptions;
 using data_models.Validations;
+using database_lib;
 
 namespace simple_mail.ViewModels
 {
     public class SettingsViewModel : BaseViewModel, IPageViewModel
     {
-        private UserDbHelper _userDbHelper = UserDbHelper.Instance;
+        private IUserDbHelper _userDbHelper = DbHelpersFactory.GetUserDbHelper(GlobalValues.HelpersTechnologyType);
         private string _oldPassword;
         private string _newPassword;
         private string _confirmNewPassword;

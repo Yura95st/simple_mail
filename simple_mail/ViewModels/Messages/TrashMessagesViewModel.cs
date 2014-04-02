@@ -1,4 +1,5 @@
 ﻿using data_models.Models;
+using database_lib;
 using database_lib.DbHelpers;
 using simple_mail.HelperClasses;
 using System;
@@ -10,7 +11,7 @@ namespace simple_mail.ViewModels
     public class TrashMessagesViewModel : BaseViewModel, IPageViewModel
     {
         private List<Message> _messagesList = new List<Message>();
-        private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
+        private IMessageDbHelper _messageDbHelper = DbHelpersFactory.GetMessageDbHelper(GlobalValues.HelpersTechnologyType);
 
         private ICommand _restoreMsgCommand;
         private ICommand _deleteMsgCommand;

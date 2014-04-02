@@ -1,9 +1,8 @@
 ﻿using data_models.Exceptions;
 using data_models.Models;
-using data_models.Validations;
+using database_lib;
 using database_lib.DbHelpers;
 using simple_mail.HelperClasses;
-using System;
 using System.Windows.Input;
 
 namespace simple_mail.ViewModels
@@ -11,8 +10,8 @@ namespace simple_mail.ViewModels
     public class ComposeMessageViewModel : BaseViewModel, IPageViewModel
     {
         private Message _messageModel = new Message();
-        private MessageDbHelper _messageDbHelper = MessageDbHelper.Instance;
-        private UserDbHelper _userDbHelper = UserDbHelper.Instance;
+        private IMessageDbHelper _messageDbHelper = DbHelpersFactory.GetMessageDbHelper(GlobalValues.HelpersTechnologyType);
+        private IUserDbHelper _userDbHelper = DbHelpersFactory.GetUserDbHelper(GlobalValues.HelpersTechnologyType);
 
         private ICommand _sendMessageCommand;
 
