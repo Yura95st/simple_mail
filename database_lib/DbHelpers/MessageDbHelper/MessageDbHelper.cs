@@ -1,5 +1,4 @@
-﻿using data_models.Exceptions;
-using data_models.Models;
+﻿using data_models.Models;
 using data_models.Validations;
 using database_lib.Validation;
 using System;
@@ -11,16 +10,9 @@ using System.Linq;
 
 namespace database_lib.DbHelpers
 {
-    public class MessageDbHelper : BaseDbHelper, IMessageDbHelper
+    public class MessageDbHelper : BaseMessageDbHelper
     {
         private static MessageDbHelper _instance;
-
-        private enum MessageType
-        {
-            Inbox,
-            Sent,
-            Trash
-        };
 
         /* SELECT messages_msg_id, messages_subject, messages_text, messages_pub_date, messages_state, 
                author_id, author_first_name, author_email, author_state, recipient_user_id, 
@@ -62,33 +54,7 @@ namespace database_lib.DbHelpers
             }
         }
 
-        // gets message by it's id number
-        public Message GetMessageById(int msgId)
-        {
-            if (msgId <= 0)
-            {
-                throw new ArgumentOutOfRangeException("msgId");
-            }
-
-            List<int> msgIdList = new List<int>();
-            msgIdList.Add(msgId);
-
-            Message msg = null;
-
-            try
-            {
-                msg = GetMessagesById(msgIdList)[0];
-            }
-            catch
-            {
-                return null;
-            }
-
-            return msg;
-        }
-
-        // gets messages with id numbers from "msgIdList" list
-        public List<Message> GetMessagesById(List<int> msgIdList)
+        public override List<Message> GetMessagesById(List<int> msgIdList)
         {
             if (msgIdList == null || msgIdList.Count == 0)
             {
@@ -109,9 +75,7 @@ namespace database_lib.DbHelpers
             return ExecuteSelectMessagesCommand(cmd);
         }
 
-        // adds new message
-        // returns id of the newly created message or 0 - if it wasn't created
-        public int AddNewMessage(Message message)
+        public override int AddNewMessage(Message message)
         {
             try
             {
@@ -192,7 +156,7 @@ namespace database_lib.DbHelpers
             return msgId;
         }
 
-        private void SendMessage(int msgId, int recipientId)
+        protected override void SendMessage(int msgId, int recipientId)
         {
             if (msgId <= 0)
             {
@@ -239,26 +203,7 @@ namespace database_lib.DbHelpers
             ExecuteNonQueryCommand(cmd);
         }
 
-        // gets inbox messages
-        public List<Message> GetInboxMessages(int userId)
-        {
-            return GetMessages(userId, (int)MessageType.Inbox);
-        }
-
-        // gets sent messages
-        public List<Message> GetSentMessages(int userId)
-        {
-            return GetMessages(userId, (int)MessageType.Sent);
-        }
-
-        // gets messages moved to trash
-        public List<Message> GetTrashMessages(int userId)
-        {
-            return GetMessages(userId, (int)MessageType.Trash);
-        }
-
-        // gets messages by type: inbox, sent, trashed
-        private List<Message> GetMessages(int userId, int msgType)
+        protected override List<Message> GetMessages(int userId, int msgType)
         {
             if (userId <= 0)
             {
@@ -325,61 +270,108 @@ namespace database_lib.DbHelpers
             return ExecuteSelectMessagesCommand(cmd);
         }
 
-        // restores message, added by author
-        public void RestoreAuthorMessage(int msgId)
+
+        protected override void SetAuthorMessageState(int msgId, int state)
         {
-            SetAuthorMessageState(msgId, (int)Message.AuthorMessageState.InitState);
+            if (msgId <= 0)
+            {
+                throw new ArgumentOutOfRangeException("msgId");
+            }
+
+            if (state < 0)
+            {
+                throw new ArgumentOutOfRangeException("state");
+            }
+
+            SqlCommand cmd = new SqlCommand();
+
+            /* UPDATE messages SET state = @state
+               WHERE msg_id = @msg_id 
+             */
+            cmd.CommandText = String.Format(@"
+                UPDATE {0} SET {1} = @state
+                WHERE {2} = @msg_id",
+                DbValues.TABLE_MESSAGES, DbValues.MESSAGES_COLUMN_STATE, DbValues.MESSAGES_COLUMN_ID);
+
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@msg_id",
+                Value = msgId,
+                SqlDbType = SqlDbType.Int
+            });
+
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@state",
+                Value = state,
+                SqlDbType = SqlDbType.Int
+            });
+
+            ExecuteNonQueryCommand(cmd);
         }
 
-        // restores message, recieved by recipient
-        public void RestoreRecipientMessage(int msgId, int recipientId)
+        protected override void SetRecipientMessageState(int msgId, int recipientId, int state)
         {
-            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.Read);
-        }
+            if (msgId <= 0)
+            {
+                throw new ArgumentOutOfRangeException("msgId");
+            }
 
-        // marks message as read
-        public void ReadMessage(int msgId, int recipientId)
-        {
-            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.Read);
-        }
-        
-        // marks message as unread
-        public void MarkMessageAsUnread(int msgId, int recipientId)
-        {
-            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.Unread);
-        }
+            if (recipientId <= 0)
+            {
+                throw new ArgumentOutOfRangeException("recipientId");
+            }
 
-        // moves to trash message, added by author
-        public void MoveToTrashAuthorMessage(int msgId)
-        {
-            SetAuthorMessageState(msgId, (int)Message.AuthorMessageState.MovedToTrash);
-        }
+            if (state < 0)
+            {
+                throw new ArgumentOutOfRangeException("state");
+            }
 
-        // moves to trash message, recieved by recipient
-        public void MoveToTrashRecipientMessage(int msgId, int recipientId)
-        {
-            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.MovedToTrash);
-        }
+            SqlCommand cmd = new SqlCommand();
 
-        // deletes message, added by author
-        public void DeleteAuthorMessage(int msgId)
-        {
-            SetAuthorMessageState(msgId, (int)Message.AuthorMessageState.Deleted);
-        }
+            /* UPDATE message_users SET state = @state
+               WHERE msg_id = @msg_id AND user_id = @user_id
+             */
+            cmd.CommandText = String.Format(@"
+                UPDATE {0} SET {1} = @state
+                WHERE {2} = @msg_id AND {3} = @user_id",
+                DbValues.TABLE_MESSAGE_USERS, DbValues.MESSAGE_USERS_COLUMN_STATE,
+                DbValues.MESSAGE_USERS_COLUMN_ID, DbValues.MESSAGE_USERS_COLUMN_USER_ID
+            );
 
-        // deletes message, recieved by recipient
-        public void DeleteRecipientMessage(int msgId, int recipientId)
-        {
-            SetRecipientMessageState(msgId, recipientId, (int)Message.RecipientMessageState.Deleted);
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@msg_id",
+                Value = msgId,
+                SqlDbType = SqlDbType.Int
+            });
+
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@user_id",
+                Value = recipientId,
+                SqlDbType = SqlDbType.Int
+            });
+
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@state",
+                Value = state,
+                SqlDbType = SqlDbType.Int
+            });
+
+            ExecuteNonQueryCommand(cmd);
         }
 
         // returns message object from the query result - dataReader
         public static Message GetMessageFromQueryResult(DbDataReader dataReader)
         {
-            Message message = new Message();
+            Message message = null;
 
             if (dataReader != null)
             {
+                message = new Message();
+
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_ID))
                 {
                     message.Id = Convert.ToInt32(dataReader[DbValues.MESSAGES_VIEW_COLUMN_ID]);
@@ -420,10 +412,12 @@ namespace database_lib.DbHelpers
         // returns message author object from the query result - dataReader
         public static User GetMessageAuthorFromQueryResult(DbDataReader dataReader)
         {
-            User author = new User();
+            User author = null;
 
             if (dataReader != null)
             {
+                author = new User();
+
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_ID))
                 {
                     author.Id = Convert.ToInt32(dataReader[DbValues.MESSAGES_VIEW_COLUMN_AUTHOR_ID]);
@@ -451,10 +445,12 @@ namespace database_lib.DbHelpers
         // returns message recipient object from the query result - dataReader
         public static User GetMessageRecipientFromQueryResult(DbDataReader dataReader)
         {
-            User recipient = new User();
+            User recipient = null;
 
             if (dataReader != null)
             {
+                recipient = new User();
+
                 if (DbValidation.ColumnExists(dataReader, DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID))
                 {
                     recipient.Id = Convert.ToInt32(dataReader[DbValues.MESSAGES_VIEW_COLUMN_RECIPIENT_ID]);
@@ -508,100 +504,6 @@ namespace database_lib.DbHelpers
 
             //orders message list by PubDate
             return messages.OrderByDescending(m => m.PubDate).ToList();
-        }
-
-        // changes author message state: 0 - init state, 1 - moved to trash, 2 - deleted
-        private void SetAuthorMessageState(int msgId, int state)
-        {
-            if (msgId <= 0)
-            {
-                throw new ArgumentOutOfRangeException("msgId");
-            }
-
-            if (state < 0)
-            {
-                throw new ArgumentOutOfRangeException("state");
-            }
-
-            SqlCommand cmd = new SqlCommand();
-
-            /* UPDATE messages SET state = @state
-               WHERE msg_id = @msg_id 
-             */
-            cmd.CommandText = String.Format(@"
-                UPDATE {0} SET {1} = @state
-                WHERE {2} = @msg_id",
-                DbValues.TABLE_MESSAGES, DbValues.MESSAGES_COLUMN_STATE, DbValues.MESSAGES_COLUMN_ID);
-
-            cmd.Parameters.Add(new SqlParameter
-            {
-                ParameterName = "@msg_id",
-                Value = msgId,
-                SqlDbType = SqlDbType.Int
-            });
-
-            cmd.Parameters.Add(new SqlParameter
-            {
-                ParameterName = "@state",
-                Value = state,
-                SqlDbType = SqlDbType.Int
-            });
-
-            ExecuteNonQueryCommand(cmd);
-        }
-
-        // changes recipient message state: 0 - read, 1 - moved to trash, 2 - deleted, 3 - unread
-        private void SetRecipientMessageState(int msgId, int recipientId, int state)
-        {
-            if (msgId <= 0)
-            {
-                throw new ArgumentOutOfRangeException("msgId");
-            }
-
-            if (recipientId <= 0)
-            {
-                throw new ArgumentOutOfRangeException("recipientId");
-            }
-
-            if (state < 0)
-            {
-                throw new ArgumentOutOfRangeException("state");
-            }
-
-            SqlCommand cmd = new SqlCommand();
-
-            /* UPDATE message_users SET state = @state
-               WHERE msg_id = @msg_id AND user_id = @user_id
-             */
-            cmd.CommandText = String.Format(@"
-                UPDATE {0} SET {1} = @state
-                WHERE {2} = @msg_id AND {3} = @user_id",
-                DbValues.TABLE_MESSAGE_USERS, DbValues.MESSAGE_USERS_COLUMN_STATE,
-                DbValues.MESSAGE_USERS_COLUMN_ID, DbValues.MESSAGE_USERS_COLUMN_USER_ID
-            );
-
-            cmd.Parameters.Add(new SqlParameter
-            {
-                ParameterName = "@msg_id",
-                Value = msgId,
-                SqlDbType = SqlDbType.Int
-            });
-
-            cmd.Parameters.Add(new SqlParameter
-            {
-                ParameterName = "@user_id",
-                Value = recipientId,
-                SqlDbType = SqlDbType.Int
-            });
-
-            cmd.Parameters.Add(new SqlParameter
-            {
-                ParameterName = "@state",
-                Value = state,
-                SqlDbType = SqlDbType.Int
-            });
-
-            ExecuteNonQueryCommand(cmd);
         }
     }
 }

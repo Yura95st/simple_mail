@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="DbHelpers\BaseDbHelper.cs" />
     <Compile Include="DbHelpers\DbHelpersFactory.cs" />
+    <Compile Include="DbHelpers\MessageDbHelper\BaseMessageDbHelper.cs" />
     <Compile Include="DbHelpers\MessageDbHelper\IMessageDbHelper.cs" />
     <Compile Include="DbHelpers\MessageDbHelper\MessageDbHelper.cs" />
     <Compile Include="DbHelpers\UserDbHelper\BaseUserDbHelper.cs" />
