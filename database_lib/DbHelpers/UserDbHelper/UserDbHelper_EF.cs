@@ -147,14 +147,14 @@ namespace database_lib.DbHelpers
                 userEntity.password = MyValidation.Hash(user.Password, user.Email.ToLower());
                 userEntity.state = user.State;
 
-                db.users.Add(userEntity);
-
                 try
                 {
-                    //TODO: fix bug with new user id
-                    userId = db.SaveChanges();
+                    db.users.Add(userEntity);
+                    db.SaveChanges();
+
+                    userId = userEntity.user_id;
                 }
-                catch
+                catch (InvalidOperationException)
                 {
                     return 0;
                 }
@@ -250,37 +250,18 @@ namespace database_lib.DbHelpers
         }
 
         // returns user object from data
-        private static User GetUserFromDataEntity(user data)
+        public static User GetUserFromDataEntity(user data)
         {
-            if (data == null)
-            {
-                return null;
-            }
+            User userObject = null;
 
-            User userObject = new User();
-
-            if (data.user_id != null)
+            if (data != null)
             {
+                userObject = new User();
+
                 userObject.Id = data.user_id;
-            }
-
-            if (data.first_name != null)
-            {
                 userObject.FirstName = data.first_name;
-            }
-
-            if (data.email != null)
-            {
                 userObject.Email = data.email;
-            }
-
-            if (data.password != null)
-            {
                 userObject.Password = data.password;
-            }
-
-            if (data.state != null)
-            {
                 userObject.State = data.state;
             }
 

@@ -271,12 +271,14 @@ namespace database_lib.DbHelpers
         }
 
         // returns user object from the query result - dataReader
-        private static User GetUserFromQueryResult(DbDataReader dataReader)
+        public static User GetUserFromQueryResult(DbDataReader dataReader)
         {
-            User user = new User();
+            User user = null;
 
             if (dataReader != null)
             {
+                user = new User();
+
                 if (DbValidation.ColumnExists(dataReader, DbValues.USERS_CAPTION_COLUMN_ID))
                 {
                     user.Id = Convert.ToInt32(dataReader[DbValues.USERS_CAPTION_COLUMN_ID]);
