@@ -6,41 +6,53 @@
   <MessageClass Name="Error" Label="Error" Option="Show errors" />
   <MessageClass Name="Property" Label="Property" Option="Show metadata" />
   <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
-  <Message Timestamp="2014-04-01T07:22:33" Importance="High" Text="Reverse Engineering Started." />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Integer' -  (PrimitiveType)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models' -  (Package)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::HelperClasses' -  (Package)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::HelperClasses::ObservableObject' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models' -  (Package)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Medium" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message' -  (Class)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_author' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_id' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_pubDate' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_recipient' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_recipientMsgState' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_state' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_subject' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::_text' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Author' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Id' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Message' -  (Operation)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::PubDate' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Recipient' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::RecipientMsgState' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::State' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Subject' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::Message::Text' -  (Property)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::User' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System' -  (Package)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System::DateTime' -  (Class)   (partially reverse engineered - definition not updated) " />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Message to modeling::System::DateTime (Association)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Message to modeling::data_models::Models::User (Association)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Message to modeling::data_models::Models::User (Association)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Message to modeling::data_models::HelperClasses::ObservableObject (Generalization)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::User to modeling::data_models::HelperClasses::ObservableObject (Generalization)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::data_models::Models::Notification to modeling::data_models::HelperClasses::ObservableObject (Generalization)" />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="High" Text="(1) type(s) fully reverse engineered." />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="High" Text="(3) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
-  <Message Timestamp="2014-04-01T07:22:34" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
+  <Message Timestamp="2014-04-03T23:33:53" Importance="High" Text="Reverse Engineering Started." />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: '15ddcfbd-d5a8-4682-b70b-c02e45885f2c' -  (ClassifierTemplateParameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Integer' -  (PrimitiveType)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models' -  (Package)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models' -  (Package)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::data_models::Models::User' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib' -  (Package)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers' -  (Package)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::BaseUserDbHelper' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Medium" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF' -  (Class)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::_instance' -  (Property)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::AddNewUser' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::AddNewUser::user' -  (Parameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::ChangePassword' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::ChangePassword::user' -  (Parameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::DeleteUser' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::DeleteUser::userId' -  (Parameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::GetAllUsers' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::GetUserByEmail' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::GetUserByEmail::email' -  (Parameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::GetUserFromDataEntity' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::GetUserFromDataEntity::data' -  (Parameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::GetUsersById' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::GetUsersById::usersIdList' -  (Parameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::Instance' -  (Property)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::ModifyUserInfo' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::ModifyUserInfo::user' -  (Parameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::SearchForUsers' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::SetUserState' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::SetUserState::state' -  (Parameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::SetUserState::userId' -  (Parameter)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::DbHelpers::UserDbHelper_EF::UserDbHelper_EF' -  (Operation)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::EntityDbDataModel' -  (Package)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::database_lib::EntityDbDataModel::user' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System' -  (Package)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System::Collections' -  (Package)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System::Collections::Generic' -  (Package)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System::Collections::Generic::List' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System::Collections::Generic::List&lt;Int32‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'modeling::System::Collections::Generic::List&lt;User‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::database_lib::DbHelpers::UserDbHelper_EF to modeling::database_lib::DbHelpers::UserDbHelper_EF (Association)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::database_lib::DbHelpers::UserDbHelper_EF to modeling::database_lib::DbHelpers::BaseUserDbHelper (Generalization)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::database_lib::DbHelpers::BaseUserDbHelper to modeling::database_lib::DbHelpers::IUserDbHelper (InterfaceRealization)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::database_lib::DbHelpers::BaseUserDbHelper to modeling::database_lib::DbHelpers::BaseDbHelper (Generalization)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: modeling::database_lib::DbHelpers::UserDbHelper to modeling::database_lib::DbHelpers::BaseUserDbHelper (Generalization)" />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="High" Text="(1) type(s) fully reverse engineered." />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="High" Text="(6) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
+  <Message Timestamp="2014-04-03T23:33:57" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
 </Log>

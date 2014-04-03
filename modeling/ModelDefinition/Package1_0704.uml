@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="b78d9daa-7c60-45c8-bde4-b20cc8b30e32"
   name="Models"
@@ -319,7 +319,7 @@
         <referencesInternal>
           <reference
             Id="be3a6959-9ed3-4ac8-a400-da747af64a54"
-            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FC:%2FYura_git%2Fsimple_mail%2Fdata_models%2Fbin%2FDebug%2Fdata_models.dll Namespace%3Ddata_models.Models Type%3DMessage"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FD:%2FYura_git%2Fsimple_mail%2Fdata_models%2Fbin%2FDebug%2Fdata_models.dll Namespace%3Ddata_models.Models Type%3DMessage"
             tag="ViewCode" />
         </referencesInternal>
         <appliedStereotypesInternal>
@@ -1832,7 +1832,7 @@
         <referencesInternal>
           <reference
             Id="a521d0b5-e0e9-4c3d-be82-b568c83ed0d4"
-            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FC:%2FYura_git%2Fsimple_mail%2Fdata_models%2Fbin%2FDebug%2Fdata_models.dll Namespace%3Ddata_models.Models Type%3DUser"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FD:%2FYura_git%2Fsimple_mail%2Fdata_models%2Fbin%2FDebug%2Fdata_models.dll Namespace%3Ddata_models.Models Type%3DUser"
             tag="ViewCode" />
         </referencesInternal>
         <appliedStereotypesInternal>

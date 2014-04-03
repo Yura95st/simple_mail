@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="8e948bf2-b798-4cac-92c4-7a4248916d32"
+  name="EntityDbDataModel"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="5b5a88b5-951a-4b02-91be-6ef29c9d99a1"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3Ddatabase_lib.EntityDbDataModel"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="28864ec1-faab-4510-a8dc-dced17f70322"
+        name="messages_view"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="7c8994d8-5837-4acf-9dae-428355ac3efc"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FD:%2FYura_git%2Fsimple_mail%2Fdatabase_lib%2Fbin%2FDebug%2Fdatabase_lib.dll Namespace%3Ddatabase_lib.EntityDbDataModel Type%3Dmessages_view"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="2e1bf5ae-bcdd-4ee8-a76d-0fe2798bd481"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="79550673-cf4f-4aea-b69c-91fc356bba65">
+                <propertyInstance
+                  Id="660a45d3-3569-4040-8cb9-c6c8823766dc"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6a6ee5fe-b713-4d40-89da-a71eb3c16ef3">
+                <propertyInstance
+                  Id="fa27833e-e224-44ef-94e3-361640fa99a4"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="60d56284-2acc-4d29-a970-8420f6012e24">
+                <propertyInstance
+                  Id="1ff9405a-be9a-4a2f-960f-ea96cd2b85e5"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5ed78afd-11d9-41e5-bea9-1ee5da6b4ad8">
+                <propertyInstance
+                  Id="579a7c72-7f14-4023-9007-53da8880899a"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8608142a-2c1b-4fd2-a582-0c180de71d0c">
+                <propertyInstance
+                  Id="a734ab82-6b1e-49ac-aa7e-77e14db80479"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="a4c49541-a998-4283-a51a-532c1f7cf947"
+        name="user"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="9028610d-d71f-4dce-aa8f-dad43a8cdeb1"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FD:%2FYura_git%2Fsimple_mail%2Fdatabase_lib%2Fbin%2FDebug%2Fdatabase_lib.dll Namespace%3Ddatabase_lib.EntityDbDataModel Type%3Duser"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="75d19912-f527-46a7-86f0-def4b7a0af56"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3cc7077a-19ef-473b-ac7c-4cd7fa54e267">
+                <propertyInstance
+                  Id="a6350bbc-9bad-4ba7-b322-571f744f5efe"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b73148e4-a37f-484f-8cb3-e77fcc2076a8">
+                <propertyInstance
+                  Id="f2945076-380e-449c-845c-c7fdeda29684"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c1e9451a-f215-4ec2-918f-5b703abc9722">
+                <propertyInstance
+                  Id="c393e8c6-da9d-48fe-96c7-f0923daf00a0"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3658258c-fe45-4502-9fb2-5f7cfe799f14">
+                <propertyInstance
+                  Id="a493796e-3848-4c81-90f3-2ca05c54b33c"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6eeb8494-898f-470a-a7f4-046a1c79b22a">
+                <propertyInstance
+                  Id="bda0b805-2b6e-4df1-982e-ba95e6a62777"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

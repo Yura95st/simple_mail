@@ -62,6 +62,9 @@
     <Content Include="ModelDefinition\Package_0710.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ModelDefinition\Package_2328.uml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Models.classdiagram">
       <SubType>Content</SubType>
     </Content>
