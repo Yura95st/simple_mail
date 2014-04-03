@@ -33,12 +33,16 @@ namespace database_lib.DbHelpers
         // changes user password
         void ChangePassword(User user);
 
+        // logs user in the system
         int LogInUser(User user);
 
+        // logs user out of the system
         void LogOutUser(int userId);
-       
+
+        // sets user state to online
         void SetUserOnline(int userId);
 
+        // sets user state to offline
         void SetUserOffline(int userId);       
     }
 }

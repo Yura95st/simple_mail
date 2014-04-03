@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace database_lib.DbHelpers
 {
-    public class UserDbHelper : BaseDbHelper, IUserDbHelper
+    public class UserDbHelper : BaseUserDbHelper
     {
         private static UserDbHelper _instance;
 
@@ -43,8 +43,7 @@ namespace database_lib.DbHelpers
             }
         }
 
-        // gets all users
-        public List<User> GetAllUsers()
+        public override List<User> GetAllUsers()
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = selectUsersCommand;
@@ -52,33 +51,7 @@ namespace database_lib.DbHelpers
             return ExecuteSelectUsersCommand(cmd);
         }
 
-        // gets user by it's id number
-        public User GetUserById(int userId)
-        {
-            if (userId <= 0)
-            {
-                throw new ArgumentOutOfRangeException("userId");
-            }
-
-            List<int> usersIdList = new List<int>();
-            usersIdList.Add(userId);
-
-            User user = null;
-
-            try
-            {
-                user = GetUsersById(usersIdList)[0];
-            }
-            catch
-            {
-                return null;
-            }
-
-            return user;
-        }
-
-        // gets users with id numbers from "userIdsList" list
-        public List<User> GetUsersById(List<int> usersIdList)
+        public override List<User> GetUsersById(List<int> usersIdList)
         {
             if (usersIdList == null || usersIdList.Count == 0) {
                 return null;
@@ -99,8 +72,7 @@ namespace database_lib.DbHelpers
             return ExecuteSelectUsersCommand(cmd);
         }
 
-        // gets user by email
-        public User GetUserByEmail(string email)
+        public override User GetUserByEmail(string email)
         {
             if (!MyValidation.IsValidEmail(email))
             {
@@ -137,15 +109,12 @@ namespace database_lib.DbHelpers
             return user;
         }   
 
-        // gets users by searching parameters
-        public List<User> SearchForUsers()
+        public override List<User> SearchForUsers()
         {
             throw new NotImplementedException();
         }
 
-        // adds new user
-        // returns id of the newly created user or 0 - if it wasn't created
-        public int AddNewUser(User user)
+        public override int AddNewUser(User user)
         {
             try
             {
@@ -215,20 +184,17 @@ namespace database_lib.DbHelpers
             return userId;
         }
 
-        // deletes user
-        public void DeleteUser(int userId)
+        public override void DeleteUser(int userId)
         {
             throw new NotImplementedException();
         }
 
-        // modifies user's info
-        public void ModifyUserInfo(User user)
+        public override void ModifyUserInfo(User user)
         {
             throw new NotImplementedException();
         }
 
-        // changes user password
-        public void ChangePassword(User user)
+        public override void ChangePassword(User user)
         {
             if (!MyValidation.IsValidPassword(user.Password))
             {
@@ -263,55 +229,49 @@ namespace database_lib.DbHelpers
             ExecuteNonQueryCommand(cmd);
         }
 
-        public int LogInUser(User user)
+        // changes user state: 0 - offline, 1 - online
+        protected override void SetUserState(int userId, int state)
         {
-            User existingUser = null;
-
-            try
+            if (userId <= 0)
             {
-                existingUser = this.GetUserByEmail(user.Email);
-            }
-            catch
-            {
-                throw;
+                throw new ArgumentOutOfRangeException("userId");
             }
 
-            if (existingUser == null) 
+            if (state < 0)
             {
-                throw new UserDoesNotExistException();
+                throw new ArgumentOutOfRangeException("state");
             }
 
-            if (!MyValidation.AreTwoPasswordsEqual(existingUser.Password, MyValidation.Hash(user.Password, existingUser.Email)))
-            {
-                throw new InvalidPasswordException(user.Password);
-            }
+            SqlCommand cmd = new SqlCommand();
 
-            try
-            {
-                SetUserOnline(existingUser.Id);
-            }
-            catch
-            {
-                throw;
-            }
+            // UPDATE users SET state = @state
+            // WHERE user_id = @user_id";
+            cmd.CommandText = String.Format(@"
+                UPDATE {0} SET {1} = @state
+                WHERE {2} = @user_id",
+                DbValues.TABLE_USERS, DbValues.USERS_COLUMN_STATE,
+                DbValues.USERS_COLUMN_ID
+            );
 
-            return existingUser.Id;
-        }
+            cmd.Parameters.Add(new SqlParameter
+            {
+                ParameterName = "@user_id",
+                Value = userId,
+                SqlDbType = SqlDbType.Int
+            });
 
-        public void LogOutUser(int userId)
-        {
-            try
+            cmd.Parameters.Add(new SqlParameter
             {
-                SetUserOffline(userId);
-            }
-            catch
-            {
-                throw;
-            }
+                ParameterName = "@state",
+                Value = state,
+                SqlDbType = SqlDbType.Int
+            });
+
+            ExecuteNonQueryCommand(cmd);
         }
 
         // returns user object from the query result - dataReader
-        public static User GetUserFromQueryResult(DbDataReader dataReader)
+        private static User GetUserFromQueryResult(DbDataReader dataReader)
         {
             User user = new User();
 
@@ -345,17 +305,7 @@ namespace database_lib.DbHelpers
 
             return user;
         }
-
-        public void SetUserOnline(int userId)
-        {
-            SetUserState(userId, (int)User.States.Online);
-        }
-
-        public void SetUserOffline(int userId)
-        {
-            SetUserState(userId, (int)User.States.Offline);
-        }
-
+        
         // executes sql command to get users
         private List<User> ExecuteSelectUsersCommand(SqlCommand command)
         {
@@ -384,47 +334,6 @@ namespace database_lib.DbHelpers
             }
 
             return users;
-        }
-
-        // changes user state: 0 - offline, 1 - online
-        private void SetUserState(int userId, int state)
-        {
-            if (userId <= 0)
-            {
-                throw new ArgumentOutOfRangeException("userId");
-            }
-
-            if (state < 0)
-            {
-                throw new ArgumentOutOfRangeException("state");
-            }
-
-            SqlCommand cmd = new SqlCommand();
-
-            // UPDATE users SET state = @state
-            // WHERE user_id = @user_id";
-            cmd.CommandText = String.Format(@"
-                UPDATE {0} SET {1} = @state
-                WHERE {2} = @user_id",
-                DbValues.TABLE_USERS, DbValues.USERS_COLUMN_STATE, 
-                DbValues.USERS_COLUMN_ID
-            );
-
-            cmd.Parameters.Add(new SqlParameter
-            {
-                ParameterName = "@user_id",
-                Value = userId,
-                SqlDbType = SqlDbType.Int
-            });
-
-            cmd.Parameters.Add(new SqlParameter
-            {
-                ParameterName = "@state",
-                Value = state,
-                SqlDbType = SqlDbType.Int
-            });
-
-            ExecuteNonQueryCommand(cmd);
         }
     }
 }

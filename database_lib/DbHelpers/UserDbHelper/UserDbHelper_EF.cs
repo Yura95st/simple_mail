@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace database_lib.DbHelpers
 {
-    public class UserDbHelper_EF : IUserDbHelper
+    public class UserDbHelper_EF : BaseUserDbHelper
     {
         private static UserDbHelper_EF _instance;
 
@@ -27,7 +27,7 @@ namespace database_lib.DbHelpers
             }
         }
 
-        public List<User> GetAllUsers()
+        public override List<User> GetAllUsers()
         {
             List<User> listUser = new List<User>();
 
@@ -52,31 +52,7 @@ namespace database_lib.DbHelpers
             return listUser;
         }
 
-        public User GetUserById(int userId)
-        {
-            if (userId <= 0)
-            {
-                throw new ArgumentOutOfRangeException("userId");
-            }
-
-            List<int> usersIdList = new List<int>();
-            usersIdList.Add(userId);
-
-            User user = null;
-
-            try
-            {
-                user = GetUsersById(usersIdList)[0];
-            }
-            catch
-            {
-                return null;
-            }
-
-            return user;
-        }
-
-        public List<User> GetUsersById(List<int> usersIdList)
+        public override List<User> GetUsersById(List<int> usersIdList)
         {
             if (usersIdList == null || usersIdList.Count == 0)
             {
@@ -107,7 +83,7 @@ namespace database_lib.DbHelpers
             return userList;
         }
 
-        public User GetUserByEmail(string email)
+        public override User GetUserByEmail(string email)
         {
             if (!MyValidation.IsValidEmail(email))
             {
@@ -139,12 +115,12 @@ namespace database_lib.DbHelpers
             return user;
         }
 
-        public List<User> SearchForUsers()
+        public override List<User> SearchForUsers()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public int AddNewUser(User user)
+        public override int AddNewUser(User user)
         {
             try
             {
@@ -175,6 +151,7 @@ namespace database_lib.DbHelpers
 
                 try
                 {
+                    //TODO: fix bug with new user id
                     userId = db.SaveChanges();
                 }
                 catch
@@ -186,17 +163,17 @@ namespace database_lib.DbHelpers
             return userId;
         }
 
-        public void DeleteUser(int userId)
+        public override void DeleteUser(int userId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public void ModifyUserInfo(User user)
+        public override void ModifyUserInfo(User user)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public void ChangePassword(User user)
+        public override void ChangePassword(User user)
         {
             if (!MyValidation.IsValidPassword(user.Password))
             {
@@ -231,103 +208,8 @@ namespace database_lib.DbHelpers
             }
         }
 
-        public int LogInUser(User user)
-        {
-            User existingUser = null;
-
-            try
-            {
-                existingUser = this.GetUserByEmail(user.Email);
-            }
-            catch
-            {
-                throw;
-            }
-
-            if (existingUser == null)
-            {
-                throw new UserDoesNotExistException();
-            }
-
-            if (!MyValidation.AreTwoPasswordsEqual(existingUser.Password, MyValidation.Hash(user.Password, existingUser.Email)))
-            {
-                throw new InvalidPasswordException(user.Password);
-            }
-
-            try
-            {
-                SetUserOnline(existingUser.Id);
-            }
-            catch
-            {
-                throw;
-            }
-
-            return existingUser.Id;
-        }
-
-        public void LogOutUser(int userId)
-        {
-            try
-            {
-                SetUserOffline(userId);
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public void SetUserOnline(int userId)
-        {
-            SetUserState(userId, (int)User.States.Online);
-        }
-
-        public void SetUserOffline(int userId)
-        {
-            SetUserState(userId, (int)User.States.Offline);
-        }
-
-        // returns user object from data
-        public static User GetUserFromDataEntity(user data)
-        {            
-            if (data == null)
-            {
-                return null;
-            }
-
-            User userObject = new User();
-
-            if (data.user_id != null)
-            {
-                userObject.Id = data.user_id;
-            }
-
-            if (data.first_name != null)
-            {
-                userObject.FirstName = data.first_name;
-            }
-
-            if (data.email != null)
-            {
-                userObject.Email = data.email;
-            }
-
-            if (data.password != null)
-            {
-                userObject.Password = data.password;
-            }
-
-            if (data.state != null)
-            {
-                userObject.State = data.state;
-            }
-
-            return userObject;
-        }
-
         // changes user state: 0 - offline, 1 - online
-        private void SetUserState(int userId, int state)
+        protected override void SetUserState(int userId, int state)
         {
             if (userId <= 0)
             {
@@ -365,6 +247,44 @@ namespace database_lib.DbHelpers
                     return;
                 }
             }
+        }
+
+        // returns user object from data
+        private static User GetUserFromDataEntity(user data)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            User userObject = new User();
+
+            if (data.user_id != null)
+            {
+                userObject.Id = data.user_id;
+            }
+
+            if (data.first_name != null)
+            {
+                userObject.FirstName = data.first_name;
+            }
+
+            if (data.email != null)
+            {
+                userObject.Email = data.email;
+            }
+
+            if (data.password != null)
+            {
+                userObject.Password = data.password;
+            }
+
+            if (data.state != null)
+            {
+                userObject.State = data.state;
+            }
+
+            return userObject;
         }
     }
 }

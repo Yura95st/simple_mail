@@ -53,6 +53,7 @@
     <Compile Include="DbHelpers\DbHelpersFactory.cs" />
     <Compile Include="DbHelpers\MessageDbHelper\IMessageDbHelper.cs" />
     <Compile Include="DbHelpers\MessageDbHelper\MessageDbHelper.cs" />
+    <Compile Include="DbHelpers\UserDbHelper\BaseUserDbHelper.cs" />
     <Compile Include="DbHelpers\UserDbHelper\IUserDbHelper.cs" />
     <Compile Include="DbHelpers\MessageDbHelper\MessageDbHelper_EF.cs" />
     <Compile Include="DbHelpers\UserDbHelper\UserDbHelper.cs" />
